@@ -1,0 +1,28 @@
+---
+// Replaces starlight-theme-black's <Head>: same head entries, but loads Space Grotesk (UI and
+// headings), Libron (reading text) and Geist Mono (code) instead of Geist Sans. Registered by the `qdocs-head` plugin in
+// astro.config.mjs, after the theme plugin.
+import { Font } from 'astro:assets';
+
+const { head } = Astro.locals.starlightRoute;
+---
+
+{head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+<Font cssVariable="--font-space-grotesk" preload />
+<Font cssVariable="--font-libron" preload />
+<Font cssVariable="--font-geist-mono" />
+
+<script>
+	// Mobile menu (starlight-theme-black): it lists every page, so open it scrolled to the page
+	// you are on rather than at the top. The theme's button toggles aria-expanded in its own
+	// click handler, which runs before this one.
+	document.addEventListener('click', (event) => {
+		const button = event.target instanceof Element ? event.target.closest('black-menu-button button') : null;
+		if (!button || button.getAttribute('aria-expanded') !== 'true') return;
+		const list = document.querySelector('.mobile-nav-content');
+		const current = list?.querySelector('a[data-active="true"]');
+		if (!list || !current) return;
+		const offset = current.getBoundingClientRect().top - list.getBoundingClientRect().top;
+		list.scrollTop += offset - list.clientHeight / 3;
+	});
+</script>

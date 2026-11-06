@@ -1,0 +1,63 @@
+---
+// One block at the bottom of a page: which lecture(s) / exercise sheet(s) the page was
+// transcribed from, and which pages.
+interface Props {
+	sources: Array<{ lecture?: number; sheet?: number; pages: string }>;
+	exercisesLink?: string | undefined;
+	polished?: boolean | undefined;
+}
+const { sources, exercisesLink, polished } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const range = (spec: string) => {
+	const [a, b] = spec.split('-').map(Number);
+	const pages: number[] = [];
+	for (let p = a; p <= (b || a); p++) pages.push(p);
+	return pages;
+};
+
+const items = sources.map((s) => {
+	const isLecture = s.lecture !== undefined;
+	const n = (isLecture ? s.lecture : s.sheet) as number;
+	const pages = range(s.pages);
+	return {
+		name: isLecture ? `Lecture ${n}` : `Exercise sheet ${n}`,
+		pagesText: pages.length > 1 ? `pages ${pages[0]}–${pages[pages.length - 1]}` : `page ${pages[0]}`,
+	};
+});
+const isNotes = sources.some((s) => s.lecture !== undefined);
+---
+
+<section class="qd-pagesrc not-content" aria-labelledby="qd-pagesrc-title" data-pagefind-ignore>
+	<div class="qd-pagesrc__head">
+		<h2 id="qd-pagesrc-title" class="qd-pagesrc__title">Source</h2>
+		{
+			exercisesLink && (
+				<a class="qd-pagesrc__ex" href={`${base}${exercisesLink}`}>
+					Exercises on this topic
+					<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6" /></svg>
+				</a>
+			)
+		}
+	</div>
+	<p class="qd-pagesrc__lead">
+		{
+			isNotes
+				? polished
+					? 'Based on the handwritten lecture notes, with the wording edited for readability.'
+					: 'Transcribed from the handwritten lecture notes.'
+				: 'Taken from the exercise sheets of the course.'
+		}
+	</p>
+	<ul class="qd-pagesrc__list">
+		{
+			items.map((i) => (
+				<li>
+					<span class="qd-pagesrc__name">
+						<strong>{i.name}</strong>, {i.pagesText}
+					</span>
+				</li>
+			))
+		}
+	</ul>
+</section>

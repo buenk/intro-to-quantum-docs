@@ -1,0 +1,477 @@
+/* ------------------------------------------------------------------
+   Intro to Quantum Computing — site styles (on top of starlight-theme-black)
+   ------------------------------------------------------------------ */
+
+/* Declare the theme's layer order before using `@layer black` below (this file is loaded
+   before the theme's own CSS, and the first declaration of a layer fixes its position). */
+@layer starlight, black;
+
+/* ---------- Typography ----------
+   Space Grotesk: UI (header, sidebar, TOC, buttons, badges) and headings.
+   Libron: the reading text of the notes. Geist Mono: code. */
+:root:root {
+	--qd-font-ui: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+	--qd-font-text: var(--font-libron), Georgia, 'Times New Roman', serif;
+	--sl-font: var(--qd-font-ui);
+	--sl-font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.sl-markdown-content {
+	font-family: var(--qd-font-text);
+}
+.sl-markdown-content :is(h1, h2, h3, h4, h5, h6),
+.sl-markdown-content :is(.qd-pagesources, .qd-pagebreak, .qd-box__title),
+.sl-markdown-content :is(.starlight-aside__title, .card .title, .sl-link-card .title, th) {
+	font-family: var(--qd-font-ui);
+}
+
+/* starlight-theme-black forces `font-size: 15px` on *every* element of the page content
+   (`.sl-markdown-content *`). That breaks KaTeX (which sizes sub/superscripts by inheritance)
+   and any component that sets a size on a container. Restore normal inheritance, inside the
+   theme's own layer so its heading/code/component sizes still apply. */
+@layer black {
+	.sl-markdown-content *:not(h1, h2, h3, h4, h5, h6) {
+		font-size: inherit;
+	}
+}
+/* Reading text: Libron has a large x-height, so 15px reads like ~17px in most faces. */
+.sl-markdown-content {
+	font-size: 0.9375rem;
+	line-height: 1.7;
+}
+.sl-markdown-content h2 { font-size: 1.25rem; line-height: 1.3; letter-spacing: -0.01em; }
+.sl-markdown-content h3 { font-size: 1.05rem; line-height: 1.35; letter-spacing: -0.005em; }
+.sl-markdown-content h4 { font-size: 0.95rem; }
+.sl-markdown-content :is(p, li) { text-wrap: pretty; }
+.sl-markdown-content li + li { margin-top: 0.35rem; }
+.sl-markdown-content :is(h2, h3, h4) { font-weight: 600; }
+.sidebar-content a.entry-link { font-weight: 450; }
+
+/* Sidebar: the theme gives links a fixed height, so two-line labels overlapped. */
+.sidebar-content {
+	width: 16rem;
+}
+.sidebar-content a.entry-link {
+	height: auto;
+	min-height: 30px;
+	line-height: 1.3;
+	padding-block: 0.35rem;
+	font-size: 0.85rem;
+}
+.sidebar-content a.entry-link > .entry-link-inner {
+	width: 15.5rem;
+}
+.sidebar-content .entry-title {
+	height: auto;
+	min-height: 2rem;
+	padding-block: 0.3rem;
+	line-height: 1.3;
+}
+
+:root {
+	--qd-radius: 0.6rem;
+	--qd-border: var(--sl-color-hairline, var(--sl-color-gray-5));
+	--qd-muted: var(--sl-color-gray-3);
+	--qd-def: var(--sl-color-blue);
+	--qd-def-bg: var(--sl-color-blue-low);
+	--qd-thm: var(--sl-color-purple);
+	--qd-thm-bg: var(--sl-color-purple-low);
+	--qd-ex: var(--sl-color-green);
+	--qd-ex-bg: var(--sl-color-green-low);
+	--qd-exc: var(--sl-color-orange);
+	--qd-exc-bg: var(--sl-color-orange-low);
+}
+
+/* ---------- Math ---------- */
+.sl-markdown-content .katex {
+	font-size: 1.04em;
+}
+.sl-markdown-content .katex-display {
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding: 0.35rem 0.1rem;
+	margin: 0.9rem 0;
+	scrollbar-width: thin;
+}
+.sl-markdown-content .katex-display > .katex {
+	max-width: 100%;
+}
+/* \textcircled{0}: KaTeX's built-in version overlays a ◯ glyph that sits off-centre. The macro in
+   src/katex-macros.json draws a \boxed digit instead, which is rounded into a circle here. */
+.katex .qd-circled .fbox {
+	border-radius: 50%;
+	border-width: 0.055em !important; /* KaTeX sets 0.04em inline */
+}
+/* KaTeX inherits currentColor; keep it readable inside colored boxes */
+.qd-box .katex {
+	color: var(--sl-color-white);
+}
+
+/* ---------- Theorem-style boxes ---------- */
+.sl-markdown-content .qd-box {
+	--qd-c: var(--sl-color-gray-3);
+	position: relative;
+	margin-block: 1.4rem;
+	padding: 0.85rem 1.1rem 0.9rem;
+	border: 1px solid var(--border, var(--sl-color-gray-6));
+	border-inline-start: 3px solid var(--qd-c);
+	border-radius: var(--qd-radius);
+	background: color-mix(in srgb, var(--sl-color-gray-7) 70%, transparent);
+}
+.sl-markdown-content .qd-box--definition { --qd-c: var(--qd-def); }
+.sl-markdown-content .qd-box--theorem { --qd-c: var(--qd-thm); }
+.sl-markdown-content .qd-box--example { --qd-c: var(--qd-ex); }
+.sl-markdown-content .qd-box--exercise { --qd-c: var(--qd-exc); }
+.sl-markdown-content .qd-box--proof {
+	--qd-c: var(--sl-color-gray-4);
+	background: transparent;
+	border-style: dashed;
+	border-inline-start-style: solid;
+	border-inline-start-width: 3px;
+}
+.sl-markdown-content .qd-box--proof > .qd-box__body::after {
+	content: '∎';
+	display: block;
+	text-align: end;
+	color: var(--sl-color-gray-3);
+	margin-top: 0.25rem;
+}
+.sl-markdown-content .qd-box__title {
+	margin: 0 0 0.45rem !important;
+	font-size: var(--sl-text-xs);
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--qd-c);
+}
+.sl-markdown-content .qd-box__name {
+	font-style: normal;
+	text-transform: none;
+	letter-spacing: 0;
+	font-weight: 600;
+	font-size: var(--sl-text-sm);
+}
+.sl-markdown-content .qd-box__body > :first-child { margin-top: 0; }
+.sl-markdown-content .qd-box__body > :last-child { margin-bottom: 0; }
+.sl-markdown-content .qd-box__body > * + * { margin-top: 0.75rem; }
+
+/* ---------- Sources block (bottom of every page, src/components/PageSources.astro) ---------- */
+.qd-pagesrc {
+	margin-top: 3.5rem;
+	padding: 1.1rem 1.25rem 1rem;
+	border: 1px solid var(--border, var(--sl-color-gray-6));
+	border-radius: calc(var(--qd-radius) + 0.15rem);
+	background: color-mix(in srgb, var(--sl-color-gray-7) 70%, transparent);
+	font-family: var(--qd-font-ui);
+	font-size: 0.875rem;
+	line-height: 1.5;
+	color: var(--sl-color-gray-3);
+}
+.qd-pagesrc__head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.5rem 1rem;
+	flex-wrap: wrap;
+}
+.qd-pagesrc__title {
+	margin: 0;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--sl-color-gray-3);
+}
+.qd-pagesrc__lead {
+	margin: 0.35rem 0 0.6rem;
+}
+.qd-pagesrc__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 0.35rem;
+}
+.qd-pagesrc__list li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.25rem 1rem;
+	padding: 0.45rem 0.7rem;
+	border-radius: var(--qd-radius);
+	background: var(--sl-color-bg, var(--background));
+	border: 1px solid var(--border, var(--sl-color-gray-6));
+}
+.qd-pagesrc__name strong {
+	color: var(--sl-color-white);
+	font-weight: 600;
+}
+.qd-pagesrc a {
+	color: var(--sl-color-white);
+	font-weight: 500;
+	text-decoration: underline;
+	text-decoration-color: var(--sl-color-gray-5);
+	text-underline-offset: 3px;
+}
+.qd-pagesrc a:hover { text-decoration-color: currentColor; }
+.qd-pagesrc a.qd-pagesrc__ex {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	text-decoration: none;
+}
+.qd-pagesrc a.qd-pagesrc__ex:hover { text-decoration: underline; }
+/* ---------- Exercise label under exercise headings ---------- */
+.sl-markdown-content .qd-extag {
+	margin: -0.35rem 0 0.9rem;
+	font-family: var(--qd-font-ui);
+	font-size: 0.8rem;
+	color: var(--sl-color-gray-3);
+}
+
+/* ---------- Footnotes (e.g. "Corrected from the original notes") ----------
+   remark-gfm renders them in <section class="footnotes"> under a screen-reader-only h2 that
+   Starlight still lists in "On this page"; show that heading as a small label so the link lands
+   somewhere visible, and set the notes apart from the text above. */
+.sl-markdown-content .footnotes {
+	margin-top: 2.5rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--sl-color-gray-6);
+	font-size: var(--sl-text-sm);
+	color: var(--sl-color-gray-2);
+}
+.sl-markdown-content .footnotes #footnote-label {
+	position: static;
+	width: auto;
+	height: auto;
+	margin: 0 0 0.6rem;
+	overflow: visible;
+	clip: auto;
+	white-space: normal;
+	font-family: var(--qd-font-ui);
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--sl-color-gray-3);
+}
+.sl-markdown-content .footnotes li + li {
+	margin-top: 0.4rem;
+}
+
+/* ---------- Page breaks (start of a handwritten page) ---------- */
+.sl-markdown-content .qd-pagebreak {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	margin: 1.6rem 0 1.1rem;
+	font-size: 0.7rem;
+	letter-spacing: 0.04em;
+	color: var(--sl-color-gray-4);
+}
+.sl-markdown-content .qd-pagebreak::before {
+	content: '';
+	flex: 1;
+	border-top: 1px dashed var(--qd-border);
+}
+.sl-markdown-content .qd-pagebreak span { white-space: nowrap; }
+
+/* ---------- Page-level source chips ---------- */
+.sl-markdown-content .qd-pagesources {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.45rem;
+	margin: 0 0 1.75rem;
+	font-size: var(--sl-text-xs);
+}
+.qd-pagesources__title {
+	color: var(--qd-muted);
+	margin-inline-end: 0.15rem;
+}
+.sl-markdown-content .qd-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.2rem 0.65rem;
+	border: 1px solid var(--qd-border);
+	border-radius: 999px;
+	color: var(--sl-color-gray-2);
+	text-decoration: none;
+	background: var(--sl-color-gray-7, var(--sl-color-gray-6));
+	transition: border-color 0.15s ease, color 0.15s ease;
+	margin: 0 !important;
+}
+.sl-markdown-content .qd-chip strong { color: var(--sl-color-white); font-weight: 600; }
+.sl-markdown-content .qd-chip:hover { border-color: var(--sl-color-accent); color: var(--sl-color-white); }
+.sl-markdown-content .qd-chip--link {
+	color: var(--sl-color-text-accent);
+	border-color: color-mix(in srgb, var(--sl-color-accent) 45%, transparent);
+	background: color-mix(in srgb, var(--sl-color-accent-low) 50%, transparent);
+}
+
+/* ---------- Handwritten figures ----------
+   The crops are black ink on opaque white paper. Blend them into the page so the paper takes the
+   page background colour (whatever the theme): multiply in light mode; in dark mode invert first
+   (paper → black, ink → light grey) and screen. */
+.sl-markdown-content figure.note-figure {
+	margin: 1.25rem auto;
+	text-align: center;
+}
+.sl-markdown-content figure.note-figure img {
+	display: inline-block;
+	max-width: 100%;
+	height: auto;
+	object-fit: contain;
+	padding: 0.25rem;
+	mix-blend-mode: multiply;
+}
+.sl-markdown-content figure.note-figure img + img { margin-inline-start: 0.75rem; }
+:root[data-theme='dark'] .sl-markdown-content figure.note-figure img {
+	filter: invert(1) hue-rotate(180deg) brightness(0.9);
+	mix-blend-mode: screen;
+}
+/* Starlight isolates .main-pane (isolation: isolate), so the blend only sees that box; give it
+   the page background or the figures blend against transparency and keep their white paper. */
+.main-pane {
+	background-color: var(--sl-color-bg);
+}
+
+/* ---------- Tables ---------- */
+.sl-markdown-content table { font-size: var(--sl-text-sm); }
+/* Row labels such as "Lecture 10" or "Sheet 3" (sources and exercises tables) broke after the word. */
+.sl-markdown-content td:first-child > strong:only-child { white-space: nowrap; }
+/* Phones: half the gap between columns, so the text columns get the room. Wide tables still
+   scroll sideways inside the table (Starlight sets overflow: auto on them). */
+@media (max-width: 40rem) {
+	.sl-markdown-content :is(th, td):not(:first-child) { padding-inline-start: 0.5rem; }
+	.sl-markdown-content :is(th, td):not(:last-child) { padding-inline-end: 0.5rem; }
+}
+
+/* ---------- Home page hero ----------
+   The splash page has no content padding, so the hero sat right under the header. */
+.hero {
+	padding-block: 2rem;
+}
+@media (min-width: 64rem) {
+	.hero {
+		padding-block: 3rem;
+	}
+}
+/* The theme renders the hero image at its 400px intrinsic width, which is wider than a phone and
+   made the whole home page scroll sideways. Keep it inside the screen, and smaller on phones so
+   the title and buttons still show above the fold. */
+.hero .hero-image {
+	max-width: 100%;
+}
+.hero .hero-image img {
+	max-width: 100%;
+	height: auto;
+}
+@media (max-width: 63.99rem) {
+	.hero .hero-image img {
+		width: min(15rem, 62vw);
+	}
+}
+.hero .hero-info {
+	max-width: 100%;
+}
+/* The three buttons sat on one line that did not fit on a phone. Let them wrap; on narrow screens
+   the main "Start reading" button gets its own full-width row. */
+.hero .hero-content-container .actions {
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.75rem 1.5rem;
+}
+@media (max-width: 30rem) {
+	.hero .hero-content-container .actions > .primary {
+		flex-basis: 100%;
+		justify-content: center;
+	}
+}
+
+/* ---------- Topic cards on landing pages ---------- */
+.qd-topic-list {
+	list-style: none;
+	padding: 0 !important;
+	display: grid;
+	gap: 0.5rem;
+}
+
+/* ---------- Previous / next links at the bottom of a page ----------
+   The theme keeps each label on one line, so a long topic title ("Evolution, reduced states and
+   quantum operations") pushed the page wider than a phone. Let the labels wrap instead; the two
+   buttons shrink to share the row and keep the same height. */
+footer .pagination-links {
+	align-items: stretch;
+	gap: 0.5rem;
+}
+footer .pagination-links a {
+	height: auto;
+	min-height: 2rem;
+	padding-block: 0.4rem;
+	line-height: 1.3;
+	white-space: normal;
+}
+footer .pagination-links a.prev { text-align: start; }
+footer .pagination-links a.next { text-align: end; }
+/* Starlight's footer row for "Edit page" / "Last updated" is empty on this site (both are off) but
+   still added ~70px of space between the sources block and these links. */
+footer .meta:not(:has(*)) { display: none; }
+
+/* ---------- Copyright notice under every page (Footer.astro) ---------- */
+.qd-notice {
+	margin-top: 2rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--sl-color-hairline);
+	font-size: var(--sl-text-xs);
+	line-height: 1.5;
+	color: var(--sl-color-gray-3);
+}
+.qd-notice a {
+	color: inherit;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+.qd-notice a:hover { color: var(--sl-color-white); }
+
+/* ---------- Mobile menu (starlight-theme-black's MobileNav) ----------
+   The theme sets every entry at 1.25rem, so long topic titles filled the screen edge to edge and
+   wrapped awkwardly. Use the normal text size, give each entry a comfortable tap area, and mark the
+   page you are on. */
+.mobile-nav .mobile-nav-content {
+	gap: 1.5rem;
+	padding-bottom: 3rem;
+}
+.mobile-nav .mobile-nav-section {
+	gap: 0.35rem;
+}
+.mobile-nav .mobile-nav-label {
+	font-size: 0.8125rem;
+}
+.mobile-nav .mobile-nav-links {
+	gap: 0.1rem;
+}
+.mobile-nav .mobile-nav-links a {
+	font-size: 1rem;
+	line-height: 1.35;
+	padding: 0.45rem 0.625rem;
+	margin-inline: -0.625rem;
+	border-radius: calc(var(--radius) - 2px);
+	overflow-wrap: break-word;
+}
+.mobile-nav .mobile-nav-links a[data-active='true'] {
+	background: var(--accent);
+	color: var(--accent-foreground);
+	font-weight: 600;
+}
+
+/* ---------- Header: even 16px spacing around the two dividers ----------
+   search | GitHub | theme toggle. The theme adds the 24px grid gap and the toggle button's
+   8px inner padding on one side of each divider only; pull those in by 8px. */
+.header .right-group {
+	margin-inline-start: -0.5rem;
+}
+.header .right-group starlight-theme-black-select {
+	margin-inline-start: -0.5rem;
+}

@@ -1,0 +1,36 @@
+{
+  "name": "intro-to-quantum-docs",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "assemble": "node scripts/assemble.mjs",
+    "dev": "astro dev",
+    "start": "npm run dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.6",
+    "@astrojs/starlight": "^0.42.9",
+    "astro": "^7.4.7",
+    "hastscript": "^9.0.3",
+    "katex": "^0.19.1",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "sharp": "^0.35.5",
+    "starlight-image-zoom": "^0.16.2",
+    "starlight-theme-black": "^0.7.1",
+    "unist-util-visit": "^5.2.0"
+  },
+  "devDependencies": {
+    "github-slugger": "^2.0.0"
+  },
+  "overrides": {
+    "katex": "$katex"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  }
+}

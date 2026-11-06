@@ -1,0 +1,14 @@
+{
+  "\\ketbra": "\\left|#1\\middle\\rangle\\!\\middle\\langle#2\\right|",
+  "\\abs": "\\left|#1\\right|",
+  "\\norm": "\\left\\lVert#1\\right\\rVert",
+  "\\Tr": "\\operatorname{Tr}",
+  "\\tr": "\\operatorname{tr}",
+  "\\C": "\\mathbb{C}",
+  "\\R": "\\mathbb{R}",
+  "\\N": "\\mathbb{N}",
+  "\\Z": "\\mathbb{Z}",
+  "\\F": "\\mathbb{F}",
+  "\\I": "\\mathbb{1}",
+  "\\textcircled": "\\htmlClass{qd-circled}{\\boxed{\\kern.07em #1\\kern.07em}}"
+}

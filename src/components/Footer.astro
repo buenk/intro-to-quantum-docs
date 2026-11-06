@@ -1,0 +1,15 @@
+---
+// Starlight <Footer> override: the page's sources block (from `sources` frontmatter), then
+// Starlight's default footer (pagination etc.), then the copyright notice shown on every page.
+import Default from '@astrojs/starlight/components/Footer.astro';
+import PageSources from './PageSources.astro';
+
+const { data } = Astro.locals.starlightRoute.entry;
+---
+
+{data.sources?.length ? <PageSources sources={data.sources} exercisesLink={data.exercisesLink} polished={data.polished} /> : null}
+<Default />
+<p class="qd-notice" data-pagefind-ignore>
+	Unofficial student transcription of the lecture notes and exercise sheets by Maris Ozols. Not
+	endorsed by the lecturer or the university. Contact: <a href="mailto:ezrabuenk@gmail.com">ezrabuenk@gmail.com</a>.
+</p>

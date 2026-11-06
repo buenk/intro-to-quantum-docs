@@ -1,0 +1,258 @@
+---
+title: "Non-locality: GHZ and CHSH games"
+description: "Quantum correlations, non-locality, and the GHZ and CHSH games."
+polished: true
+sources: [{"lecture":8,"pages":"1-9"}]
+exercisesLink: "/exercises/entanglement/#non-locality-ghz-and-chsh-games"
+---
+## Quantum non-locality and entanglement
+
+What is the difference between a shared uniformly random bit
+
+$$
+\tfrac12 [00] + \tfrac12 [11] = \frac12 \begin{pmatrix} 1 \\ 0 \\ 0 \\ 1 \end{pmatrix}
+$$
+
+and a shared maximally entangled state
+
+$$
+\tfrac{1}{\sqrt2}\ket{00} + \tfrac{1}{\sqrt2}\ket{11} = \frac{1}{\sqrt2} \begin{pmatrix} 1 \\ 0 \\ 0 \\ 1 \end{pmatrix} \; ?
+$$
+
+Clearly, the quantum state is at least as useful, since it reduces to a shared uniformly random bit when both qubits are measured in the standard basis. But can it be more useful?
+
+Shared random bits represent correlations. When Alice and Bob look at their bits, the values are correlated: in the case of the uniformly random bit, if Alice sees 0, she immediately knows that Bob's value will also be 0, even if he is at the other end of the galaxy. Even if Alice now knows Bob's value, this does not help Bob in any way. He does not know if Alice has looked at her bit and already knows what value he will see. For all he knows, he might still be the first one looking at the bit, and hence might in principle still observe either of the two values. Note that there is no inconsistency here: in whichever order they observe the bits, they will see 00 with probability $\frac12$ and 11 with probability $\frac12$. Also, this does not let them communicate instantaneously in any way.
+
+## Quantum correlations
+
+For qubits the situation is very similar, except that each qubit can be measured in an arbitrary basis. But how are these measurement outcomes correlated?
+
+:::example
+Consider $\ket{\beta_{00}} = \frac{1}{\sqrt2}(\ket{00} + \ket{11})$, called the EPR (Einstein-Podolsky-Rosen) state. You can check that
+
+$$
+(U \otimes U^*)\ket{\beta_{00}} = \ket{\beta_{00}}
+$$
+
+for any unitary $U$. This means that the measurement outcomes are perfectly correlated if the first qubit is measured in the $U$ basis and the second qubit is measured in the $U^*$ basis, for any single-qubit unitary $U$.
+:::
+
+:::example
+Consider $\ket{\beta_{11}} = \frac{1}{\sqrt2}(\ket{01} - \ket{10})$, also called the singlet or antisymmetric state. You can check that
+
+$$
+(U \otimes U)\ket{\beta_{11}} = \underbrace{\det(U)}_{\text{a global phase when $U$ is unitary}} \ket{\beta_{11}}
+$$
+
+for any $2\times 2$ matrix $U$. Hence, if both qubits are measured in the $U$ basis, the measurement outcomes are perfectly anti-correlated (opposite and uniformly random), for any unitary $U$.
+:::
+
+These examples illustrate a sense in which entanglement represents a stronger (quantum) correlation: the measurement outcomes of the two qubits are perfectly related to each other not only in the standard basis, but in any matching pair of bases.
+
+::pagebreak{lecture="8" page="3"}
+
+Just like with probabilistic bits, it is not possible to use this phenomenon to communicate between the two parties.
+
+## Quantum non-locality
+
+Neither quantum nor classical correlations let you communicate. But does that also mean that we can reproduce the quantum correlations classically without communication? Surprisingly, the answer is "no". Quantum correlations are strictly more powerful than classical ones, and can even achieve tasks that cannot be accomplished classically without communication. This phenomenon is called **quantum non-locality**: quantum behaviour cannot be reproduced classically by local actions only.
+
+This is best illustrated in the setting of **non-local games**, where several players collaboratively play against a referee. In the classical case, their strategy can rely on a shared random string, while in the quantum case they can use a shared entangled state.
+
+## GHZ game (Greenberger-Horne-Zeilinger)
+
+This game involves three collaborating players: Alice, Bob, and Charlie. Each of them receives a bit, $s,t,u \in \{0,1\}$, and must output a bit, $a,b,c \in \{0,1\}$. They can share a random string or a quantum state before the game starts.
+
+![Diagram: players A, B, C receive input bits s, t, u respectively and output bits a, b, c](../../../assets/figures/L08-p03-1.png "w=205")
+
+::pagebreak{lecture="8" page="4"}
+
+However, they cannot communicate once the game starts. This can be enforced by putting them sufficiently far from each other and requiring the answers to be returned fast enough that no messages can be exchanged between the parties during the time they need to come up with answers, even if they communicate at the speed of light.
+
+![Diagram: A, B, C each connected to a central referee point; inputs s, t, u go from the referee to A, B, C and outputs a, b, c come back](../../../assets/figures/L08-p04-1.png "w=194")
+
+The rules of the game are as follows. The input comes with a **promise**: it has even parity,
+
+$$
+s \oplus t \oplus u = 0.
+$$
+
+The **goal** of the players is to produce outputs with
+
+$$
+a \oplus b \oplus c = \begin{cases} 0 & \text{if } stu = 000 \\ 1 & \text{otherwise, that is,} \\ & stu \in \{011, 101, 110\}. \end{cases}
+$$
+
+For example, if $stu = 000$, they can output any string $abc \in \{000, 011, 101, 110\}$. So there is more than one correct answer.
+
+### Deterministic strategies
+
+First assume that each party's answer depends deterministically on their input. If Alice receives input $s \in \{0,1\}$, she outputs $a_s \in \{0,1\}$. Her strategy is thus fully specified by two bits, $a_0$ and $a_1$. Similarly, Bob's strategy is determined by $b_t \in \{0,1\}$ and Charlie's by $c_u \in \{0,1\}$. To win on all four possible inputs, their outputs $a_s, b_t, c_u$ must satisfy
+
+$$
+\begin{cases}
+a_0 \oplus b_0 \oplus c_0 = 0 \\
+a_0 \oplus b_1 \oplus c_1 = 1 \\
+a_1 \oplus b_0 \oplus c_1 = 1 \\
+a_1 \oplus b_1 \oplus c_0 = 1
+\end{cases}
+$$
+
+But this is impossible, since adding all equations mod 2 yields $0 = 1$.
+
+::pagebreak{lecture="8" page="5"}
+
+Hence, there is no perfect deterministic strategy. The best we can do is to satisfy (any) three out of the four equations. For example, if $a_i = b_i = 0$ and $c_i = 1$, irrespective of the input, the last three equations are satisfied but the first one is not. What about more general classical strategies that use randomness?
+
+### Probabilistic strategies
+
+Alice, Bob, and Charlie could share some random string which they could use to coordinate their actions (part of it could also be used exclusively by, say, Alice, so she can have a local randomized strategy of her own). We denote this string by $r$ and its probability of occurring by $q_r$. There are 4 possible input strings $stu$; assume that each occurs with probability 1/4. Then the overall probability of success is
+
+$$
+\sum_r q_r \frac14 \sum_{stu \in \{000, 011, 101, 110\}} P(s,t,u,r)
+$$
+
+where $P(s,t,u,r) = 1$ if the deterministic protocol with randomness $r$ succeeds on input $stu$, and $P(s,t,u,r) = 0$ if it fails. Since $q_r \ge 0$ and $\sum_r q_r = 1$, this is an average over $r$, so it is at most the largest term:
+
+$$
+\max_r \frac14 \sum_{stu \in \{000, 011, 101, 110\}} P(s,t,u,r)
+$$
+
+This is just $\frac14$ times the number of inputs on which the best deterministic strategy can succeed. As we saw earlier, the best deterministic strategy can succeed on at most 3 out of 4 inputs. Hence the best probabilistic strategy can succeed with probability at most 3/4.
+
+::pagebreak{lecture="8" page="6"}
+
+### Quantum strategies
+
+Instead of a random string, Alice, Bob and Charlie could also share a quantum state before the game starts. In this particular case, the following state is very useful:
+
+$$
+\ket{\Psi} = \frac12 \left(\ket{000} - \ket{011} - \ket{101} - \ket{110}\right).
+$$
+
+This state can be obtained from the so-called GHZ state: $\ket{\Psi} = U^{\otimes 3}\ket{\text{GHZ}}$, where
+
+$$
+\ket{\text{GHZ}} = \frac{1}{\sqrt2}\left(\ket{000} + \ket{111}\right) \qquad \text{and} \qquad U = \frac{1}{\sqrt2}\begin{pmatrix} 1 & 1 \\ i & -i \end{pmatrix}.
+$$
+
+The main advantage of sharing a quantum state instead of a probability distribution is that qubits can be measured in more than one basis. In particular, each player can choose the basis adaptively, based on their input. This allows them to produce measurement outcomes that are correlated in ways that are not possible classically.
+
+The strategy for using $\ket{\Psi}$ is as follows: each party measures in a basis determined by their input, namely the standard basis if the input is 0 and the Hadamard basis if it is 1. More explicitly:
+
+- Alice applies $H^s$ and measures,
+- Bob applies $H^t$ and measures,
+- Charlie applies $H^u$ and measures.
+
+So you can think of a quantum strategy as a function from input bits to a measurement basis, while classically it was a function from input bits to output bits.
+
+::pagebreak{lecture="8" page="7"}
+
+There are four possible inputs:
+
+$$
+\begin{matrix} 000 \\ 011 \\ 101 \\ 110 \end{matrix}
+$$
+
+In the first case, they just measure $\ket{\Psi}$ in the standard basis. Since $\ket{\Psi}$ is a superposition of even-weight strings, they will get one of them at random, so their output $abc$ will clearly have the property that $a \oplus b \oplus c = 0$, as desired. The other three cases are symmetric, so we only consider 011. First, note that
+
+$$
+\begin{aligned}
+\ket{\Psi} &= \frac12\Big(\ket{0}\left(\ket{00} - \ket{11}\right) - \ket{1}\left(\ket{01} + \ket{10}\right)\Big) \\
+&= \frac{1}{\sqrt2}\Big(\ket{0}\ket{\beta_{10}} - \ket{1}\ket{\beta_{01}}\Big),
+\end{aligned}
+$$
+
+where $\ket{\beta_{10}}$ and $\ket{\beta_{01}}$ are two of the [Bell states](/notes/superdense-coding/#bell-states). In the exercise class you'll show that
+
+$$
+(H \otimes H)\ket{\beta_{zx}} = (-1)^{zx}\ket{\beta_{xz}},
+$$
+
+so after $I \otimes H \otimes H$ (for input 011) the state becomes
+
+$$
+\begin{aligned}
+&\frac{1}{\sqrt2}\Big(\ket{0}\ket{\beta_{01}} - \ket{1}\ket{\beta_{10}}\Big) \\
+&= \frac12\Big(\ket{0}\left(\ket{01} + \ket{10}\right) - \ket{1}\left(\ket{00} - \ket{11}\right)\Big) \\
+&= \frac12\Big(\ket{001} + \ket{010} - \ket{100} + \ket{111}\Big).
+\end{aligned}
+$$
+
+This is a superposition of odd-weight bit strings, so the measurement outcomes $a,b,c$ will satisfy $a \oplus b \oplus c = 1$. The inputs 101 and 110 work in the same way.[^fix-1]
+
+Hence the quantum strategy always succeeds, and they win with 100% probability.
+
+## CHSH game (Clauser-Horne-Shimony-Holt)
+
+The GHZ game is for 3 players. Is there also a two-player game that demonstrates the advantage of quantum strategies?
+
+The CHSH game involves only two players, Alice and Bob:
+
+![Diagram: players A and B receive input bits s and t respectively and output bits a and b](../../../assets/figures/L08-p08-1.png "w=117")
+
+Alice and Bob receive input bits $s,t \in \{0,1\}$ and output bits $a,b \in \{0,1\}$. They win if $a \oplus b = \text{AND}(s,t) = st$. Equivalently:
+
+| $st$ | Win if... |
+|------|-----------|
+| 00 | $a = b$ |
+| 01 | $a = b$ |
+| 10 | $a = b$ |
+| 11 | $a \neq b$ |
+
+As before, there is no unique winning output in each case. Rather, the output must satisfy a certain property (namely, have the right parity), and several outputs have this property.
+
+### Deterministic strategies
+
+Let $a_s$ denote the bit Alice outputs when she receives $s$, and $b_t$ the bit Bob outputs when he receives $t$. The winning constraints are then as follows:
+
+$$
+\left.\begin{cases}
+a_0 \oplus b_0 = 0 \\
+a_0 \oplus b_1 = 0 \\
+a_1 \oplus b_0 = 0
+\end{cases}\right\}\text{ both outputs are the same}
+$$
+
+$$
+a_1 \oplus b_1 = 1 \quad \longleftarrow \text{ their outputs are different}
+$$
+
+As before, this linear system of equations does not have a solution, since adding all equations mod 2 yields $0 = 1$. One can easily satisfy 3 out of 4 equations.
+
+::pagebreak{lecture="8" page="9"}
+
+### Probabilistic strategy
+
+By a convexity argument similar to the one for the [GHZ game](/notes/non-local-games/#probabilistic-strategies), the best success probability under a uniform input distribution is the largest fraction of inputs on which a deterministic strategy can win. As in the GHZ game, this is 3/4 (for example, both players can always output 0, which satisfies the first three equations).
+
+### Quantum strategy
+
+Assume Alice and Bob share the Bell state
+
+$$
+\ket{\beta_{10}} = \frac{1}{\sqrt2}\left(\ket{00} - \ket{11}\right).
+$$
+
+They will both adjust their measurement basis depending on their respective inputs. Let
+
+$$
+G(\alpha) = \begin{pmatrix} \cos\alpha & -\sin\alpha \\ \sin\alpha & \cos\alpha \end{pmatrix}
+$$
+
+Both strategies involve rotating by an angle that depends on the respective input:
+
+- Alice applies $G(\theta_s)$ and measures,
+- Bob applies $G(\theta_t)$ and measures,
+
+where $\theta_i = \frac{\pi}{16}(4i - 1)$. That is, $\theta_0 = -\pi/16$ and $\theta_1 = 3\pi/16$.
+
+You will check in the exercise class that
+
+$$
+\big(G(\alpha_1) \otimes G(\alpha_2)\big)\ket{\beta_{10}} = \underbrace{\cos(\alpha_1 + \alpha_2)\ket{\beta_{10}}}_{\text{even parity}} + \underbrace{\sin(\alpha_1 + \alpha_2)\ket{\beta_{01}}}_{\text{odd parity}},
+$$
+
+where $\ket{\beta_{01}} = \frac{1}{\sqrt2}(\ket{01} + \ket{10})$. When this is measured, they get $a \oplus b = \text{AND}(s,t) = st$ with probability $\cos^2(\pi/8) \approx 0.85 > 3/4$, which is better than what is possible classically.
+
+[^fix-1]: Corrected from the original notes, which say *Similarly for the other three cases*. Only two inputs remain.
