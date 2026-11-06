@@ -1,16 +1,15 @@
 ---
 title: "Exercises: Error correction"
 description: "Exercises on repetition codes, quantum error correction and the Steane code."
+sources: [{"sheet":12,"pages":"1-3"}]
 ---
-::pagesources{label="Exercise sheets:" items="E12:1-3"}
-
 ## Error correction for bits
 
 ::pagesources{label="Notes:" notes="/notes/classical-error-correction/"}
 
 ### CNOT gymnastics
 
-::source{sheet="12" exercise="1" pages="1"}
+::extag{sheet="12" exercise="1"}
 
 Prove the following circuit identities:
 
@@ -28,7 +27,7 @@ Prove the following circuit identities:
 
 ### Propagation of Pauli errors
 
-::source{sheet="12" exercise="2" pages="1-2"}
+::extag{sheet="12" exercise="2"}
 
 Prove the following circuit identities:
 
@@ -56,7 +55,7 @@ Prove the following circuit identities:
 
 ### Measuring non-commuting observables
 
-::source{sheet="12" exercise="3" pages="2"}
+::extag{sheet="12" exercise="3"}
 
 Let $\ket{\psi} = \ket{0}$. Consider the following two scenarios that correspond to measuring the observables $Z$ and $X$ in different order:
 
@@ -68,13 +67,13 @@ Denote the measurement outcomes in the two cases by $a_1, b_1 \in \{0,1\}$ and $
 
 ### Commuting matrices can be simultaneously diagonalized
 
-::source{sheet="12" exercise="4" pages="2"}
+::extag{sheet="12" exercise="4"}
 
 Let $A$ and $B$ be two normal (and hence diagonalizable) matrices. For simplicity, assume they are $2 \times 2$ and invertible. Show that if $AB = BA$ then there is a unitary matrix $U$ such that $UAU^\dagger$ and $UBU^\dagger$ are both diagonal.
 
 ### Stabilizers of Bell states
 
-::source{sheet="12" exercise="5" pages="3"}
+::extag{sheet="12" exercise="5"}
 
 Recall that the four Bell states are as follows:
 
@@ -99,7 +98,7 @@ Find the stabilizers of the other Bell states.
 
 ### Cirq: Steane code
 
-::source{sheet="12" exercise="6" pages="3"}
+::extag{sheet="12" exercise="6"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).

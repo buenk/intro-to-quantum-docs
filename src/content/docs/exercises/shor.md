@@ -1,16 +1,15 @@
 ---
 title: "Exercises: Fourier transform and Shor's algorithm"
 description: "Exercises on phase estimation, the quantum Fourier transform, and factoring via period finding."
+sources: [{"sheet":10,"pages":"1-2"},{"sheet":11,"pages":"1-2"}]
 ---
-::pagesources{label="Exercise sheets:" items="E10:1-2;E11:1-2"}
-
 ## Quantum phase estimation
 
 ::pagesources{label="Notes:" notes="/notes/phase-estimation/"}
 
 ### Cirq: Phase estimation
 
-::source{sheet="11" exercise="5" pages="2"}
+::extag{sheet="11" exercise="5"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -22,7 +21,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### QFT on 1 and 2 qubits
 
-::source{sheet="10" exercise="1" pages="1"}
+::extag{sheet="10" exercise="1"}
 
 Recall that the matrix entries of the $M \times M$ quantum Fourier transform QFT are
 
@@ -38,7 +37,7 @@ where $\omega = \exp(2\pi i/M)$ and $j, k \in \{0, \dots, M-1\}$. Write down the
 
 ### Quantum circuit for QFT on 2 qubits
 
-::source{sheet="10" exercise="2" pages="1"}
+::extag{sheet="10" exercise="2"}
 
 The goal of this exercise is to better understand the quantum Fourier transform on two qubits.
 
@@ -54,7 +53,7 @@ The goal of this exercise is to better understand the quantum Fourier transform 
 
 ### Roots of unity
 
-::source{sheet="10" exercise="3" pages="1"}
+::extag{sheet="10" exercise="3"}
 
 Let $\omega = \exp(2\pi i/M)$ be the $M$-th root of unity.
 
@@ -68,13 +67,13 @@ Let $\omega = \exp(2\pi i/M)$ be the $M$-th root of unity.
 
 ### Unitarity of QFT
 
-::source{sheet="10" exercise="4" pages="2"}
+::extag{sheet="10" exercise="4"}
 
 Let QFT denote the $M \times M$ quantum Fourier transform. Recall that $\mathrm{QFT}_{jk} = \omega^{jk}/\sqrt{M}$ where $\omega = \exp(2\pi i/M)$ and $j, k \in \{0, \dots, M-1\}$. Write down an expression for the matrix entry $(\mathrm{QFT}^\dagger)_{kl}$ and verify that QFT is unitary.
 
 ### Product representation of the QFT output
 
-::source{sheet="10" exercise="5" pages="2"}
+::extag{sheet="10" exercise="5"}
 
 Note that any number $b \in [0, 1)$ that is of the form $a/2^n$, for some $a \in \{0, \dots, 2^n - 1\}$, can be uniquely expressed as
 
@@ -115,7 +114,7 @@ It can be proved by showing that the vectors on both sides agree entry-wise. For
 
 ### Cirq: Quantum Fourier transform
 
-::source{sheet="11" exercise="4" pages="2"}
+::extag{sheet="11" exercise="4"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -127,7 +126,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Euclidean algorithm
 
-::source{sheet="11" exercise="1" pages="1"}
+::extag{sheet="11" exercise="1"}
 
 Recall that the greatest common divisor $\gcd(a, b)$ of integers $a$ and $b$ is the largest positive integer that divides both $a$ and $b$. Assuming (without loss of generality) that $a \geq b$, note that
 
@@ -156,7 +155,7 @@ for any $m \geq 0$. To decrease the bigger number by as much as possible, it is 
 
 ### Multiplicative inverse and order
 
-::source{sheet="11" exercise="2" pages="1-2"}
+::extag{sheet="11" exercise="2"}
 
 Let $\alpha = a/d$ and $\beta = b/d$, where $a, b, d$ are the values from the previous exercise. Note that $\gcd(\alpha, \beta) = 1$, i.e., $\alpha$ and $\beta$ are relatively prime.
 
@@ -192,7 +191,7 @@ Let $\alpha = a/d$ and $\beta = b/d$, where $a, b, d$ are the values from the pr
 
 ### Using order finding to factor
 
-::source{sheet="11" exercise="3" pages="2"}
+::extag{sheet="11" exercise="3"}
 
 Your goal is to factor $N = 21$ using order finding. Assume the random number $a \in \{2, \dots, N-1\}$ you picked in the first step of the algorithm is:
 
@@ -204,7 +203,7 @@ Go through the remaining steps of the algorithm and determine the factors of $N$
 
 ### Cirq (bonus): Order finding
 
-::source{sheet="11" exercise="6" pages="2"}
+::extag{sheet="11" exercise="6"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).

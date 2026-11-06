@@ -1,16 +1,13 @@
 ---
 title: "Error correction for bits"
 description: "The repetition code, the problem setup, obstacles, and error correction for probabilistic bits."
+polished: true
+sources: [{"lecture":12,"pages":"1-7"}]
+exercisesLink: "/exercises/error-correction/#error-correction-for-bits"
 ---
-::pagesources{items="L12:1-7" exercises="/exercises/error-correction/#error-correction-for-bits"}
-
-::source{lecture="12" pages="1"}
-
 The goal of this lecture is to understand how one can go about correcting errors in quantum states. It is not obvious at all that this is even possible, so we will first see how this works for deterministic and probabilistic bits.
 
 ## Classical repetition code
-
-::source{lecture="12" pages="1"}
 
 The simplest way to protect information from errors is by duplicating it. This introduces a lot of redundancy, so even if some copies are perturbed or even destroyed, one can still recover the information from the remaining copies. For example, let's make 3 copies:
 
@@ -21,7 +18,7 @@ $$
 \end{aligned}
 $$
 
-This code works well if at most one bit-flip error occurs. Alternatively, you can think of each bit getting flipped with a very small probability. E.g., 001 was most likely produced by having an error on the last bit of 000, rather than two errors – one on each of the first two bits. In general, we would decode by using the majority vote:
+This code works well if at most one bit-flip error occurs. Alternatively, you can think of each bit as getting flipped with a very small probability. For example, 001 was most likely produced by an error on the last bit of 000, rather than by two errors, one on each of the first two bits of 111. In general, we decode by majority vote:
 
 $$
 \text{Dec:}\quad
@@ -34,9 +31,7 @@ This takes care of any single-bit error.
 
 ## Problem setup
 
-::source{lecture="12" pages="2"}
-
-Let us state a bit more formally the problem we are trying to address. Imagine somebody gives you an unknown qubit state $\ket{\psi} \in \C^2$ and asks you to store it for some time or transmit it to somebody else. If the storage device or transmission channel are not perfect, any individual qubit might get perturbed with very small probability by an arbitrary single-qubit operation $U \in \mathrm{U}(2)$. Hence, we want to spread the information out into several qubits to protect it:
+Let us state a bit more formally the problem we are trying to address. Imagine somebody gives you an unknown qubit state $\ket{\psi} \in \C^2$ and asks you to store it for some time or transmit it to somebody else. If the storage device or transmission channel is not perfect, any individual qubit might get perturbed with very small probability by an arbitrary single-qubit operation $U \in \mathrm{U}(2)$. Hence, we want to spread the information out into several qubits to protect it:
 
 ![Diagram: an unknown state |ψ⟩ ∈ C² is encoded by Enc into several qubits, then repeated Fix operations act on the encoded qubits, with random single-qubit errors U and X occurring in between, and finally Dec returns the same state as the input; labels mark the random errors and the uncorrupted encoded state |Ψ⟩ ∈ C^(2^n) immediately after encoding and each fixing operation](../../../assets/figures/L12-p02-1.png "w=743")
 
@@ -44,21 +39,17 @@ We need to apply a fixing operation Fix often enough to make sure that the error
 
 ## Obstacles to quantum error correction
 
-::source{lecture="12" pages="3"}
+At first it might seem that quantum error correction is impossible, for several reasons:
 
-At first it might seem that quantum error correction is impossible for several reasons:
+- we cannot duplicate information, since quantum states cannot be copied;
+- we cannot check whether an error has occurred without measuring the state, but a measurement would destroy the state;
+- the errors are continuous: there are infinitely many possible errors, so we cannot hope to correct them perfectly.
 
-- cannot duplicate information since quantum states cannot be copied,
-- cannot check if an error has occurred without measuring the state, but a measurement would destroy the state,
-- the errors are continuous – there are infinitely many possible errors, so we cannot hope to perfectly correct them.
-
-This list seems pretty daunting. However, neither of these obstacles are unique to quantum computing – they are all a consequence of linearity of the state space and operations, which is also the case for probabilistic bits. Let's try to tackle them first in this simpler setting and then generalize to the quantum case.
+This list seems pretty daunting. However, none of these obstacles is unique to quantum computing. They are all a consequence of the linearity of the state space and operations, which is also the case for probabilistic bits. So we first tackle them in this simpler setting, and then generalize to the quantum case.
 
 ## Error correction for probabilistic bits
 
-::source{lecture="12" pages="3-7"}
-
-We cannot copy probabilistic bits, but we can still use the 3-bit repetition code by linearity:
+We cannot copy probabilistic bits either, but we can still use the 3-bit repetition code: we encode $[0]$ and $[1]$ as before and extend by linearity:
 
 $$
 \text{Enc:}\quad p_0[0] + p_1[1] \mapsto p_0[000] + p_1[111]
@@ -70,13 +61,13 @@ We can achieve this by using two CNOTs:
 
 ::pagebreak{lecture="12" page="4"}
 
-That's great, but how do we detect errors? Say, an $X$ error happened on the first bit:
+That's great, but how do we detect errors? Say an $X$ error happened on the first bit:
 
 $$
 (X \otimes I \otimes I) \cdot (p_0[000] + p_1[111]) = p_0[100] + p_1[011].
 $$
 
-We can't just measure the bits to compare them since this would collapse the distribution to one of the two cases and eliminate the appearance of $p_0$ and $p_1$. However, our goal is not to learn the values of individual bits, but rather which of the possible errors did occur. There are 4 cases:
+We can't just measure the bits to compare them, since this would collapse the distribution to one of the two cases, and $p_0$ and $p_1$ would no longer appear in it. However, our goal is not to learn the values of individual bits, but rather which of the possible errors occurred. There are 4 cases:
 
 $$
 \begin{aligned}
@@ -87,7 +78,7 @@ X_3:\quad & p_0[001] + p_1[110]
 \end{aligned}
 $$
 
-We see that all eight 3-bit strings occur, each exactly once. In fact, the errors partition these strings into 4 groups, each containing 2 strings (a string of Hamming weight 0 or 1, and its negation). All we want is to figure out in which of the four cases we are, without identifying a single individual string (as this would destroy $p_0$ and $p_1$):
+We see that all eight 3-bit strings occur, each exactly once. In fact, the errors partition these strings into 4 groups, each containing 2 strings: a string of Hamming weight 0 or 1 (at most one 1), and its negation. All we want is to figure out which of the four cases we are in, without identifying an individual string (as this would destroy $p_0$ and $p_1$):
 
 ![Oval divided into four cells labelled I, X1, X2, X3, each containing two dots](../../../assets/figures/L12-p04-1.png "w=192")
 
@@ -107,19 +98,19 @@ x_1x_2x_3 & x_2 \oplus x_3 & x_1 \oplus x_3 & \text{Error} \\
 \end{array}
 $$
 
-We can do this by inspecting the correlations between bits, for example the parities $y_1 = x_2 \oplus x_3$ and $y_2 = x_1 \oplus x_3$ uniquely identify which error occurred. We can then correct it by applying $X_y$ where $y = y_1y_2$ is the index in binary.
+We can do this by inspecting the correlations between bits. For example, as the table shows, the parities $y_1 = x_2 \oplus x_3$ and $y_2 = x_1 \oplus x_3$ uniquely identify which error occurred. These two bits are the **error syndrome**. We can then correct the error by applying $X_y$, where $y = y_1y_2$ is the index of the flipped bit in binary.
 
 ::pagebreak{lecture="12" page="5"}
 
-This can be implemented as follows:
+This can be implemented with CNOTs that compute the two parities into two extra syndrome bits:
 
 ![Circuit: two syndrome qubits [0] are the targets of CNOTs controlled by the data qubits p0[000]+p1[111] (an X error on the first data qubit), then measured to give y1 and y2 in {0,1}](../../../assets/figures/L12-p05-1.png "w=616")
 
-Note that we can start correcting the error on the fly before even measuring – we simply use the syndrome bits as controls and the data qubits as targets:
+We can even start correcting the error on the fly, before measuring: we simply use the syndrome bits as controls and the data bits as targets:
 
 ![Circuit: syndrome computation followed by a correction stage controlled by the syndrome bits, with a shorthand for a control on one qubit with two targets](../../../assets/figures/L12-p05-2.png "w=711")
 
-The syndrome bits can now be safely discarded and the data bits will be automatically corrected. This is somewhat similar to how a refrigerator keeps your food cool by pumping out the heat. You can actually keep track of how an X error propagates through the circuit by using the following identities:
+The syndrome bits can now be safely discarded, and the data bits will be automatically corrected. This is somewhat similar to how a refrigerator keeps your food cool by pumping out the heat. You can actually keep track of how an $X$ error propagates through the circuit by using the following identities:
 
 ![Two circuit identities: an X error on the target before a CNOT equals the same X on the target after; an X error on the control before a CNOT equals X on control and target after](../../../assets/figures/L12-p05-3.png "w=579")
 
@@ -127,7 +118,7 @@ This way you can move the errors to the right until they fall out the other end.
 
 ::pagebreak{lecture="12" page="6"}
 
-What about the final issue, namely dealing with continuous errors? For example, imagine the case when an X error is applied with some arbitrary probability $q$. This corresponds to the following operation:
+What about the final issue, namely dealing with continuous errors? For example, imagine that an $X$ error is applied with some arbitrary probability $q$. This corresponds to the following operation:
 
 $$
 Q = (1-q)I + qX = \begin{pmatrix} 1-q & q \\ q & 1-q \end{pmatrix}.
@@ -166,12 +157,12 @@ and we know which one it is from the measurement outcome, so we can easily corre
 
 ::pagebreak{lecture="12" page="7"}
 
-Assume we encode 1 bit into $n$ bits to protect it against single-bit flip errors. How big does $n$ have to be for this to work (e.g., could it be 2), and does it get easier or harder to protect the information against errors if we use more bits?
+Assume we encode 1 bit into $n$ bits to protect it against single-bit flip errors. How big does $n$ have to be for this to work (could it be 2, for example)? And does it get easier or harder to protect the information against errors if we use more bits?
 
-We can do a simple counting argument. The total dimension of an $n$ bit code is $2^n$. In this space we need to fit in $n+1$ 2-dimensional subspaces: there are $n$ different possible bit-flip errors, plus the lucky case of no error, so $n+1$ cases we need to be able to discriminate. Hence, it must be that
+We can answer this with a simple counting argument. The total dimension of an $n$-bit code is $2^n$. There are $n$ different possible bit-flip errors, plus the lucky case of no error, so there are $n+1$ cases we need to be able to discriminate. Each case takes up a 2-dimensional subspace, spanned by the two encoded strings with that error applied (like the groups of two strings above). So we need to fit $n+1$ 2-dimensional subspaces into a $2^n$-dimensional space, which means that
 
 $$
 2^n \geq 2(n+1)
 $$
 
-The smallest $n$ for which this holds is $n = 3$, and as $n$ increases, it gets easier and easier to fit $n+1$ 2-dimensional subspaces in a $2^n$-dimensional space.
+The smallest $n$ for which this holds is $n = 3$, so 2 bits are not enough. As $n$ increases, it gets easier and easier to fit $n+1$ 2-dimensional subspaces in a $2^n$-dimensional space.

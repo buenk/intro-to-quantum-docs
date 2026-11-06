@@ -1,16 +1,15 @@
 ---
 title: "Exercises: Quantum mechanics"
 description: "Exercises on the rules of the game: states, evolution, measurement and composite systems."
+sources: [{"sheet":3,"pages":"1-2"}]
 ---
-::pagesources{label="Exercise sheets:" items="E03:1-2"}
-
 ## The postulates of quantum mechanics
 
 ::pagesources{label="Notes:" notes="/notes/postulates/"}
 
 ### Schrödinger equation
 
-::source{sheet="3" exercise="5" pages="2"}
+::extag{sheet="3" exercise="5"}
 
 Recall that Schrödinger equation is a differential equation that describes the continuous-time evolution of a quantum system. It looks as follows:
 
@@ -39,7 +38,7 @@ $$
 
 ### Unitary transformations and orthonormal bases
 
-::source{sheet="3" exercise="1" pages="1"}
+::extag{sheet="3" exercise="1"}
 
 Let $U$ be a unitary matrix of size $n \times n$ and define vectors $\ket{u_i} = U\ket{i}$, for each $i \in \{1,\dots,n\}$.
 
@@ -51,7 +50,7 @@ Let $U$ be a unitary matrix of size $n \times n$ and define vectors $\ket{u_i} =
 
 ### Simulating a measurement in another basis
 
-::source{sheet="3" exercise="2" pages="1"}
+::extag{sheet="3" exercise="2"}
 
 Your quantum computer can measure only in the standard basis $\ket{1},\dots,\ket{n}$, but your boss gives you a state $\ket{\psi} \in \mathbb{C}^n$ and asks to measure it some arbitrary orthonormal basis $\ket{u_1},\dots,\ket{u_n} \in \mathbb{C}^n$. Luckily, you can do this using the following steps:
 
@@ -66,7 +65,7 @@ Verify that these three steps are indeed equivalent to measuring $\ket{\psi}$ in
 
 ### Basis change
 
-::source{sheet="3" exercise="3" pages="1"}
+::extag{sheet="3" exercise="3"}
 
 Express the matrix $X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$ in the basis $\left\{ \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ i \end{pmatrix}, \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -i \end{pmatrix} \right\}$.
 
@@ -76,13 +75,13 @@ Express the matrix $X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$ in the bas
 
 ### Entanglement and local operations
 
-::source{sheet="3" exercise="4" pages="1"}
+::extag{sheet="3" exercise="4"}
 
 Assume that $\ket{\Psi}$ is an entangled two-qubit state. Show that $\ket{\Psi'} = (U \otimes V)\ket{\Psi}$ is also entangled, for any choice of single-qubit unitary transformations $U$ and $V$.
 
 ### Measuring one qubit at a time
 
-::source{sheet="3" exercise="6" pages="2"}
+::extag{sheet="3" exercise="6"}
 
 A two-qubit system is in the following state:
 

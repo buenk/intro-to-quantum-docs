@@ -23,7 +23,7 @@
     "remark-math": "^6.0.0",
     "sharp": "^0.35.5",
     "starlight-image-zoom": "^0.16.2",
-    "starlight-theme-nova": "^0.12.3",
+    "starlight-theme-black": "^0.7.1",
     "unist-util-visit": "^5.2.0"
   },
   "devDependencies": {

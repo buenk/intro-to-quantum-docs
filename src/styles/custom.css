@@ -1,6 +1,71 @@
 /* ------------------------------------------------------------------
-   Intro to Quantum Computing — site styles (on top of Starlight Nova)
+   Intro to Quantum Computing — site styles (on top of starlight-theme-black)
    ------------------------------------------------------------------ */
+
+/* Declare the theme's layer order before using `@layer black` below (this file is loaded
+   before the theme's own CSS, and the first declaration of a layer fixes its position). */
+@layer starlight, black;
+
+/* ---------- Typography ----------
+   Space Grotesk: UI (header, sidebar, TOC, buttons, badges) and headings.
+   Libron: the reading text of the notes. Geist Mono: code. */
+:root:root {
+	--qd-font-ui: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+	--qd-font-text: var(--font-libron), Georgia, 'Times New Roman', serif;
+	--sl-font: var(--qd-font-ui);
+	--sl-font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.sl-markdown-content {
+	font-family: var(--qd-font-text);
+}
+.sl-markdown-content :is(h1, h2, h3, h4, h5, h6),
+.sl-markdown-content :is(.qd-pagesources, .qd-pagebreak, .qd-box__title),
+.sl-markdown-content :is(.starlight-aside__title, .card .title, .sl-link-card .title, th) {
+	font-family: var(--qd-font-ui);
+}
+
+/* starlight-theme-black forces `font-size: 15px` on *every* element of the page content
+   (`.sl-markdown-content *`). That breaks KaTeX (which sizes sub/superscripts by inheritance)
+   and any component that sets a size on a container. Restore normal inheritance, inside the
+   theme's own layer so its heading/code/component sizes still apply. */
+@layer black {
+	.sl-markdown-content *:not(h1, h2, h3, h4, h5, h6) {
+		font-size: inherit;
+	}
+}
+/* Reading text: Libron has a large x-height, so 15px reads like ~17px in most faces. */
+.sl-markdown-content {
+	font-size: 0.9375rem;
+	line-height: 1.7;
+}
+.sl-markdown-content h2 { font-size: 1.25rem; line-height: 1.3; letter-spacing: -0.01em; }
+.sl-markdown-content h3 { font-size: 1.05rem; line-height: 1.35; letter-spacing: -0.005em; }
+.sl-markdown-content h4 { font-size: 0.95rem; }
+.sl-markdown-content :is(p, li) { text-wrap: pretty; }
+.sl-markdown-content li + li { margin-top: 0.35rem; }
+.sl-markdown-content :is(h2, h3, h4) { font-weight: 600; }
+.sidebar-content a.entry-link { font-weight: 450; }
+
+/* Sidebar: the theme gives links a fixed height, so two-line labels overlapped. */
+.sidebar-content {
+	width: 16rem;
+}
+.sidebar-content a.entry-link {
+	height: auto;
+	min-height: 30px;
+	line-height: 1.3;
+	padding-block: 0.35rem;
+	font-size: 0.85rem;
+}
+.sidebar-content a.entry-link > .entry-link-inner {
+	width: 15.5rem;
+}
+.sidebar-content .entry-title {
+	height: auto;
+	min-height: 2rem;
+	padding-block: 0.3rem;
+	line-height: 1.3;
+}
 
 :root {
 	--qd-radius: 0.6rem;
@@ -18,7 +83,7 @@
 
 /* ---------- Math ---------- */
 .sl-markdown-content .katex {
-	font-size: 1.08em;
+	font-size: 1.04em;
 }
 .sl-markdown-content .katex-display {
 	overflow-x: auto;
@@ -30,6 +95,12 @@
 .sl-markdown-content .katex-display > .katex {
 	max-width: 100%;
 }
+/* \textcircled{0}: KaTeX's built-in version overlays a ◯ glyph that sits off-centre. The macro in
+   src/katex-macros.json draws a \boxed digit instead, which is rounded into a circle here. */
+.katex .qd-circled .fbox {
+	border-radius: 50%;
+	border-width: 0.055em !important; /* KaTeX sets 0.04em inline */
+}
 /* KaTeX inherits currentColor; keep it readable inside colored boxes */
 .qd-box .katex {
 	color: var(--sl-color-white);
@@ -37,25 +108,25 @@
 
 /* ---------- Theorem-style boxes ---------- */
 .sl-markdown-content .qd-box {
-	--qd-c: var(--sl-color-accent);
-	--qd-bg: var(--sl-color-accent-low);
+	--qd-c: var(--sl-color-gray-3);
 	position: relative;
 	margin-block: 1.4rem;
 	padding: 0.85rem 1.1rem 0.9rem;
-	border: 1px solid color-mix(in srgb, var(--qd-c) 35%, transparent);
-	border-inline-start: 4px solid var(--qd-c);
+	border: 1px solid var(--border, var(--sl-color-gray-6));
+	border-inline-start: 3px solid var(--qd-c);
 	border-radius: var(--qd-radius);
-	background: color-mix(in srgb, var(--qd-bg) 55%, transparent);
+	background: color-mix(in srgb, var(--sl-color-gray-7) 70%, transparent);
 }
-.sl-markdown-content .qd-box--definition { --qd-c: var(--qd-def); --qd-bg: var(--qd-def-bg); }
-.sl-markdown-content .qd-box--theorem { --qd-c: var(--qd-thm); --qd-bg: var(--qd-thm-bg); }
-.sl-markdown-content .qd-box--example { --qd-c: var(--qd-ex); --qd-bg: var(--qd-ex-bg); }
-.sl-markdown-content .qd-box--exercise { --qd-c: var(--qd-exc); --qd-bg: var(--qd-exc-bg); }
+.sl-markdown-content .qd-box--definition { --qd-c: var(--qd-def); }
+.sl-markdown-content .qd-box--theorem { --qd-c: var(--qd-thm); }
+.sl-markdown-content .qd-box--example { --qd-c: var(--qd-ex); }
+.sl-markdown-content .qd-box--exercise { --qd-c: var(--qd-exc); }
 .sl-markdown-content .qd-box--proof {
 	--qd-c: var(--sl-color-gray-4);
 	background: transparent;
 	border-style: dashed;
 	border-inline-start-style: solid;
+	border-inline-start-width: 3px;
 }
 .sl-markdown-content .qd-box--proof > .qd-box__body::after {
 	content: '∎';
@@ -83,89 +154,120 @@
 .sl-markdown-content .qd-box__body > :last-child { margin-bottom: 0; }
 .sl-markdown-content .qd-box__body > * + * { margin-top: 0.75rem; }
 
-/* ---------- Source badges ---------- */
-.sl-markdown-content .qd-source {
-	margin: 0.4rem 0 1.15rem;
-	font-size: var(--sl-text-xs);
-	line-height: 1.4;
-	color: var(--qd-muted);
-	border: 1px solid var(--qd-border);
-	border-radius: var(--qd-radius);
-	background: color-mix(in srgb, var(--sl-color-gray-6) 45%, transparent);
-	overflow: hidden;
-	padding: 0;
-	border-inline-start: 1px solid var(--qd-border);
+/* ---------- Sources block (bottom of every page, src/components/PageSources.astro) ---------- */
+.qd-pagesrc {
+	margin-top: 3.5rem;
+	padding: 1.1rem 1.25rem 1rem;
+	border: 1px solid var(--border, var(--sl-color-gray-6));
+	border-radius: calc(var(--qd-radius) + 0.15rem);
+	background: color-mix(in srgb, var(--sl-color-gray-7) 70%, transparent);
+	font-family: var(--qd-font-ui);
+	font-size: 0.875rem;
+	line-height: 1.5;
+	color: var(--sl-color-gray-3);
 }
-.sl-markdown-content .qd-source__row {
+.qd-pagesrc__head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.5rem 1rem;
+	flex-wrap: wrap;
+}
+.qd-pagesrc__title {
+	margin: 0;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--sl-color-gray-3);
+}
+.qd-pagesrc__lead {
+	margin: 0.35rem 0 0.6rem;
+}
+.qd-pagesrc__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 0.35rem;
+}
+.qd-pagesrc__list li {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
-	gap: 0.3rem 0.9rem;
-	padding: 0.38rem 0.7rem;
-	list-style: none;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.25rem 1rem;
+	padding: 0.45rem 0.7rem;
+	border-radius: var(--qd-radius);
+	background: var(--sl-color-bg, var(--background));
+	border: 1px solid var(--border, var(--sl-color-gray-6));
 }
-.sl-markdown-content summary.qd-source__row { cursor: pointer; user-select: none; }
-.sl-markdown-content summary.qd-source__row::-webkit-details-marker,
-.sl-markdown-content summary.qd-source__row::marker { display: none; content: ''; }
-.qd-source__label {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.45rem;
-	margin-inline-end: auto;
+.qd-pagesrc__name strong {
+	color: var(--sl-color-white);
+	font-weight: 600;
 }
-.qd-source__label strong { color: var(--sl-color-white); font-weight: 600; }
-.qd-source__links { display: inline-flex; gap: 0.8rem; }
-.sl-markdown-content .qd-source a {
+.qd-pagesrc__links {
 	display: inline-flex;
-	align-items: center;
-	gap: 0.28rem;
-	color: var(--sl-color-text-accent);
-	text-decoration: none;
+	gap: 1rem;
+}
+.qd-pagesrc a {
+	color: var(--sl-color-white);
 	font-weight: 500;
+	text-decoration: underline;
+	text-decoration-color: var(--sl-color-gray-5);
+	text-underline-offset: 3px;
 }
-.sl-markdown-content .qd-source a:hover { text-decoration: underline; }
-.qd-source__toggle {
+.qd-pagesrc a:hover { text-decoration-color: currentColor; }
+.qd-pagesrc a.qd-pagesrc__ex {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.3rem;
-	padding: 0.1rem 0.5rem;
-	border-radius: 999px;
-	border: 1px solid var(--qd-border);
-	color: var(--sl-color-gray-2);
-	font-weight: 500;
-	transition: border-color 0.15s ease, color 0.15s ease;
+	text-decoration: none;
 }
-.qd-source__row:hover .qd-source__toggle { border-color: var(--sl-color-accent); color: var(--sl-color-white); }
-.qd-source__chev {
-	width: 0.45rem;
-	height: 0.45rem;
+.qd-pagesrc a.qd-pagesrc__ex:hover { text-decoration: underline; }
+.qd-pagesrc__scans { margin-top: 0.7rem; }
+.qd-pagesrc__scans > summary {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	cursor: pointer;
+	user-select: none;
+	list-style: none;
+	font-weight: 500;
+	color: var(--sl-color-gray-2);
+}
+.qd-pagesrc__scans > summary::-webkit-details-marker { display: none; }
+.qd-pagesrc__scans > summary::before {
+	content: '';
+	width: 0.42rem;
+	height: 0.42rem;
 	border-right: 1.5px solid currentColor;
 	border-bottom: 1.5px solid currentColor;
-	transform: rotate(45deg) translate(-1px, -1px);
+	transform: rotate(-45deg);
 	transition: transform 0.15s ease;
 }
-.qd-source[open] .qd-source__chev { transform: rotate(-135deg) translate(-1px, -1px); }
-.qd-source[open] > summary { border-bottom: 1px solid var(--qd-border); }
-.qd-icon { flex: none; }
-.sl-markdown-content .qd-scans {
+.qd-pagesrc__scans[open] > summary::before { transform: rotate(45deg); }
+.qd-pagesrc__scans > summary:hover { color: var(--sl-color-white); }
+.qd-scans {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
 	gap: 0.75rem;
-	padding: 0.75rem;
+	margin-top: 0.75rem;
 }
-.sl-markdown-content .qd-scan {
+.qd-scan {
 	position: relative;
-	display: block !important;
+	display: block;
 	border-radius: 0.4rem;
 	overflow: hidden;
-	border: 1px solid var(--qd-border);
+	border: 1px solid var(--border, var(--sl-color-gray-6));
 	background: #fff;
 }
-.sl-markdown-content .qd-scan img {
+.qd-scan img {
 	display: block;
 	width: 100%;
 	height: auto;
 }
+.qd-pagesrc a.qd-scan { text-decoration: none; }
 .qd-scan__label {
 	position: absolute;
 	inset-inline-end: 0.4rem;
@@ -176,8 +278,43 @@
 	color: #fff;
 	font-size: 0.7rem;
 }
-@media (max-width: 40rem) {
-	.qd-source__toggle-text { display: none; }
+
+/* ---------- Exercise label under exercise headings ---------- */
+.sl-markdown-content .qd-extag {
+	margin: -0.35rem 0 0.9rem;
+	font-family: var(--qd-font-ui);
+	font-size: 0.8rem;
+	color: var(--sl-color-gray-3);
+}
+
+/* ---------- Footnotes (e.g. "Corrected from the original notes") ----------
+   remark-gfm renders them in <section class="footnotes"> under a screen-reader-only h2 that
+   Starlight still lists in "On this page"; show that heading as a small label so the link lands
+   somewhere visible, and set the notes apart from the text above. */
+.sl-markdown-content .footnotes {
+	margin-top: 2.5rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--sl-color-gray-6);
+	font-size: var(--sl-text-sm);
+	color: var(--sl-color-gray-2);
+}
+.sl-markdown-content .footnotes #footnote-label {
+	position: static;
+	width: auto;
+	height: auto;
+	margin: 0 0 0.6rem;
+	overflow: visible;
+	clip: auto;
+	white-space: normal;
+	font-family: var(--qd-font-ui);
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--sl-color-gray-3);
+}
+.sl-markdown-content .footnotes li + li {
+	margin-top: 0.4rem;
 }
 
 /* ---------- Page breaks (start of a handwritten page) ---------- */
@@ -236,7 +373,10 @@
 	background: color-mix(in srgb, var(--sl-color-accent-low) 50%, transparent);
 }
 
-/* ---------- Handwritten figures ---------- */
+/* ---------- Handwritten figures ----------
+   The crops are black ink on opaque white paper. Blend them into the page so the paper takes the
+   page background colour (whatever the theme): multiply in light mode; in dark mode invert first
+   (paper → black, ink → light grey) and screen. */
 .sl-markdown-content figure.note-figure {
 	margin: 1.25rem auto;
 	text-align: center;
@@ -246,19 +386,33 @@
 	max-width: 100%;
 	height: auto;
 	object-fit: contain;
-	border-radius: 0.5rem;
-	background: #fff;
 	padding: 0.25rem;
+	mix-blend-mode: multiply;
 }
 .sl-markdown-content figure.note-figure img + img { margin-inline-start: 0.75rem; }
-/* Dark mode: invert the black-ink-on-white crops so they blend in */
 :root[data-theme='dark'] .sl-markdown-content figure.note-figure img {
-	filter: invert(0.9) hue-rotate(180deg);
-	background: #fff;
+	filter: invert(1) hue-rotate(180deg) brightness(0.9);
+	mix-blend-mode: screen;
+}
+/* Starlight isolates .main-pane (isolation: isolate), so the blend only sees that box; give it
+   the page background or the figures blend against transparency and keep their white paper. */
+.main-pane {
+	background-color: var(--sl-color-bg);
 }
 
 /* ---------- Tables ---------- */
 .sl-markdown-content table { font-size: var(--sl-text-sm); }
+
+/* ---------- Home page hero ----------
+   The splash page has no content padding, so the hero sat right under the header. */
+.hero {
+	padding-block: 2rem;
+}
+@media (min-width: 64rem) {
+	.hero {
+		padding-block: 3rem;
+	}
+}
 
 /* ---------- Topic cards on landing pages ---------- */
 .qd-topic-list {
@@ -268,7 +422,12 @@
 	gap: 0.5rem;
 }
 
-/* ---------- Small screens ---------- */
-@media (max-width: 30rem) {
-	.site-title span { font-size: 1rem !important; }
+/* ---------- Header: even 16px spacing around the two dividers ----------
+   search | GitHub | theme toggle. The theme adds the 24px grid gap and the toggle button's
+   8px inner padding on one side of each divider only; pull those in by 8px. */
+.header .right-group {
+	margin-inline-start: -0.5rem;
+}
+.header .right-group starlight-theme-black-select {
+	margin-inline-start: -0.5rem;
 }

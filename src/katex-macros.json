@@ -9,5 +9,6 @@
   "\\N": "\\mathbb{N}",
   "\\Z": "\\mathbb{Z}",
   "\\F": "\\mathbb{F}",
-  "\\I": "\\mathbb{1}"
+  "\\I": "\\mathbb{1}",
+  "\\textcircled": "\\htmlClass{qd-circled}{\\boxed{\\kern.07em #1\\kern.07em}}"
 }

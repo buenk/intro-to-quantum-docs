@@ -1,0 +1,46 @@
+/* ------------------------------------------------------------------
+   tweakcn bridge: maps the shadcn tokens pasted in tweakcn.css onto starlight-theme-black.
+
+   Not listed in astro.config.mjs: src/plugins/tweakcn.mjs appends this file to tweakcn.css, and
+   only when a theme is pasted there. Like tweakcn.css it is unlayered, so it overrides the theme's
+   `@layer black` defaults; rules use :where() so the site's own styles in custom.css still win.
+
+   Tokens the theme already reads under the same name need nothing here: --background,
+   --foreground, --primary(-foreground), --secondary(-foreground), --muted, --muted-foreground,
+   --accent(-foreground), --border, --input, --ring, --card(-foreground), --radius, --spacing,
+   --shadow-md, --sidebar-accent-foreground. Fonts (--font-sans/serif/mono), --chart-*,
+   --destructive and the other --sidebar-* tokens are unused.
+   ------------------------------------------------------------------ */
+
+:root {
+	/* Grey scale. Starlight and the theme use --gray-1 (strongest text) to --gray-7 (faintest
+	   surface) in both modes; tweakcn has none, so blend it from the theme's text and page colours. */
+	--gray-1: color-mix(in oklab, var(--foreground) 94%, var(--background));
+	--gray-2: color-mix(in oklab, var(--foreground) 85%, var(--background));
+	--gray-3: var(--muted-foreground);
+	--gray-4: color-mix(in oklab, var(--foreground) 50%, var(--background));
+	--gray-5: color-mix(in oklab, var(--foreground) 32%, var(--background));
+	--gray-6: var(--border);
+	--gray-7: color-mix(in oklab, var(--foreground) 6%, var(--background));
+	--sl-color-white: var(--foreground);
+	--sl-color-black: var(--background);
+
+	/* Same token, different name. */
+	--popover-background: var(--popover);
+
+	/* The theme is black-and-white; let the tweakcn primary colour show in a few places. */
+	--selection: var(--primary);
+	--selection-foreground: var(--primary-foreground);
+}
+
+/* Links in the notes, and the current heading in "On this page". */
+.sl-markdown-content :where(a:not([class])) {
+	color: var(--primary);
+	text-decoration-color: color-mix(in oklab, var(--primary) 40%, transparent);
+}
+.sl-markdown-content :where(a:not([class])):hover {
+	text-decoration-color: var(--primary);
+}
+:where(starlight-toc a[aria-current='true']) {
+	color: var(--primary);
+}

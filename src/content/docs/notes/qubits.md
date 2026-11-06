@@ -1,27 +1,24 @@
 ---
 title: "Qubits and the Bloch sphere"
 description: "Qubit states, measurement, qubit operations, phases and the Bloch sphere."
+polished: true
+sources: [{"lecture":1,"pages":"9-14"}]
+exercisesLink: "/exercises/foundations/#qubits-and-the-bloch-sphere"
 ---
-::pagesources{items="L01:9-14" exercises="/exercises/foundations/#qubits-and-the-bloch-sphere"}
+## From probabilistic bits to qubits
 
-## Quantum bits (qubits)
+A quantum bit, or **qubit**, works much like a [probabilistic bit](/notes/probabilistic-bits/). There are only two differences:
 
-::source{lecture="1" pages="9"}
-
-Only two differences between probabilistic and quantum bits:
-
-1. probabilities replaced by complex amplitudes,
-2. amplitudes are squared when measuring.
+1. the probabilities are replaced by complex numbers called **amplitudes**;
+2. the amplitudes are squared when you measure.
 
 Everything else in quantum computing is a consequence of these two small changes!
 
-When added, complex (or just negative) numbers can cancel -- this important effect is called **interference** and it does not happen with probabilities.
+Unlike probabilities, amplitudes can be negative or even complex, so when you add them they can cancel out. This important effect is called **interference**. It does not happen with probabilities, which are never negative.
 
 ## Qubit states
 
-::source{lecture="1" pages="9"}
-
-Instead of coins $\textcircled{0}$ and $\textcircled{1}$ we use "kets":
+For probabilistic bits we wrote the deterministic states as $\textcircled{0}$ and $\textcircled{1}$. For qubits we use the same two vectors, but write them as "kets":
 
 $$
 \ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \qquad\qquad \ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}
@@ -33,17 +30,23 @@ $$
 \psi_0 \ket{0} + \psi_1 \ket{1} = \psi_0 \begin{pmatrix} 1 \\ 0 \end{pmatrix} + \psi_1 \begin{pmatrix} 0 \\ 1 \end{pmatrix} = \begin{pmatrix} \psi_0 \\ \psi_1 \end{pmatrix}
 $$
 
-where $\psi_0, \psi_1 \in \C$ are called **amplitudes** and satisfy
+Here $\psi_0, \psi_1 \in \C$ are the **amplitudes**. They must satisfy
 
 $$
 |\psi_0|^2 + |\psi_1|^2 = 1
 $$
 
+This is the qubit version of $p_0 + p_1 = 1$: as the next section shows, $|\psi_0|^2$ and $|\psi_1|^2$ are the probabilities of the two measurement outcomes.
+
 ## Measuring a qubit
 
-::source{lecture="1" pages="10"}
+Measuring a qubit works like measuring a probabilistic bit, except that the probability of each outcome is given by the **Born rule**:
 
-Born rule: probability $= |\text{amplitude}|^2$
+$$
+\text{probability} = |\text{amplitude}|^2
+$$
+
+So you get outcome 0 with probability $|\psi_0|^2$ and outcome 1 with probability $|\psi_1|^2$:
 
 $$
 \begin{pmatrix} \psi_0 \\ \psi_1 \end{pmatrix}
@@ -53,13 +56,11 @@ $$
 \ \xrightarrow{\ |\psi_1|^2\ }\ \ket{1}
 $$
 
-If the measurement outcome is $k \in \{0, 1\}$ then the state after the measurement becomes $\ket{k}$ and the original state is gone. In particular, you don't learn $\psi_0$ or $\psi_1$ this way.
+If the outcome is $k \in \{0, 1\}$, the state after the measurement becomes $\ket{k}$ and the original state is gone. In particular, you don't learn $\psi_0$ or $\psi_1$ this way, just as measuring a probabilistic bit does not tell you $p_0$ or $p_1$.
 
 ## Quantum NOT
 
-::source{lecture="1" pages="10"}
-
-Just like for probabilistic bits, quantum operations are **extended by linearity**:
+Just like for probabilistic bits, quantum operations are **extended by linearity**. NOT swaps $\ket{0}$ and $\ket{1}$, so on a general state it swaps the two amplitudes:
 
 $$
 \begin{aligned}
@@ -68,31 +69,29 @@ $$
 \end{aligned}
 $$
 
-The output is also a quantum state since $|\psi_0|^2 + |\psi_1|^2 = 1$.
+The output is again a valid quantum state: its amplitudes are the same two numbers in the other order, so their squared absolute values still add up to $|\psi_0|^2 + |\psi_1|^2 = 1$.
 
 ## General qubit operation
 
-::source{lecture="1" pages="11"}
-
-Let's call it $U$. For some $a, b, c, d \in \C$,
+What does a general operation on a qubit look like? Call it $U$. Because $U$ is linear, it is determined by what it does to $\ket{0}$ and $\ket{1}$. For some $a, b, c, d \in \C$,
 
 $$
 U\ket{0} = \begin{pmatrix} a \\ b \end{pmatrix} \qquad\text{and}\qquad U\ket{1} = \begin{pmatrix} c \\ d \end{pmatrix}
 $$
 
-These too are quantum states so
+These are quantum states too, so
 
 $$
 |a|^2 + |b|^2 = 1 \qquad\text{and}\qquad |c|^2 + |d|^2 = 1
 $$
 
-Are these the only constraints? Let $\ket{\psi} := \psi_0 \ket{0} + \psi_1 \ket{1}$ be an arbitrary qubit state ($|\psi_0|^2 + |\psi_1|^2 = 1$). By linearity,
+Are these the only constraints? To find out, apply $U$ to an arbitrary qubit state $\ket{\psi} := \psi_0 \ket{0} + \psi_1 \ket{1}$, with $|\psi_0|^2 + |\psi_1|^2 = 1$. By linearity,
 
 $$
 U\ket{\psi} = \psi_0 U\ket{0} + \psi_1 U\ket{1} = \psi_0 \begin{pmatrix} a \\ b \end{pmatrix} + \psi_1 \begin{pmatrix} c \\ d \end{pmatrix} = \begin{pmatrix} \psi_0 a + \psi_1 c \\ \psi_0 b + \psi_1 d \end{pmatrix} = \begin{pmatrix} \psi_0' \\ \psi_1' \end{pmatrix}
 $$
 
-This should also be a quantum state so
+This must also be a quantum state, so its squared amplitudes must add up to 1. Expanding them with $z \cdot \bar{z} = |z|^2$ (see [complex conjugation](/notes/complex-numbers/#complex-conjugation)):
 
 $$
 \begin{aligned}
@@ -104,51 +103,64 @@ $$
 \end{aligned}
 $$
 
-*(Recall: $z \cdot \bar{z} = |z|^2$.)*
+The first two brackets equal 1 by the constraints we already have. For the total to be 1 for every state, the last two brackets must be 0. They are complex conjugates of each other, since $c\bar{a} + d\bar{b} = \overline{a\bar{c} + b\bar{d}}$, so this adds just one new condition:
 
-*(Pointing at the term $c\bar{a} + d\bar{b}$: $\overline{a\bar{c} + b\bar{d}}$ so it's redundant.)*
+:::theorem[General qubit operation]
+A general qubit operation is a matrix
 
 $$
-\boxed{\begin{array}{l}
-\text{A general qubit operation is of the form } U = \begin{pmatrix} a & c \\ b & d \end{pmatrix} \\
-\text{where } a, b, c, d \in \C \text{ are such that} \\
-|a|^2 + |b|^2 = 1, \quad |c|^2 + |d|^2 = 1, \quad a\bar{c} + b\bar{d} = 0.
-\end{array}}
+U = \begin{pmatrix} a & c \\ b & d \end{pmatrix}
 $$
+
+where $a, b, c, d \in \C$ are such that
+
+$$
+|a|^2 + |b|^2 = 1, \qquad |c|^2 + |d|^2 = 1, \qquad a\bar{c} + b\bar{d} = 0.
+$$
+:::
+
+Matrices like this are called *unitary*. The same argument works in any dimension; see [the postulates of quantum mechanics](/notes/postulates/).
 
 ## Global and relative phases
 
-::source{lecture="1" pages="12"}
+The **phase** of a complex number $re^{i\varphi}$ is $e^{i\varphi}$. Two states can differ by a phase in two ways, and only one of them matters.
 
-- The **phase** of $re^{i\varphi}$ is $e^{i\varphi}$. We say that two vectors $\ket{\psi}$ and $\ket{\psi'}$ differ only by a **global phase** if
+### Global phase
 
-  $$
-  \ket{\psi} = e^{i\varphi} \ket{\psi'} \qquad\qquad \text{for some } \varphi \in \R.
-  $$
+Two vectors $\ket{\psi}$ and $\ket{\psi'}$ differ only by a **global phase** if
 
-  Such states produce the same measurement statistics since $|e^{i\varphi} z| = |z|$ for any $z \in \C$. Moreover, $U\ket{\psi} = e^{i\varphi} U\ket{\psi'}$ so they still differ only by a global phase also after any operation $U$. This means that $\ket{\psi}$ and $\ket{\psi'}$ represent the same physical reality.
-- For comparison, consider
+$$
+\ket{\psi} = e^{i\varphi} \ket{\psi'} \qquad\qquad \text{for some } \varphi \in \R.
+$$
 
-  $$
-  \ket{+} = \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}) \qquad\text{and}\qquad \ket{-} = \frac{1}{\sqrt{2}} (\ket{0} - \ket{1})
-  $$
+Such states produce the same measurement statistics, since $|e^{i\varphi} z| = |z|$ for any $z \in \C$. Moreover, $U\ket{\psi} = e^{i\varphi} U\ket{\psi'}$, so they still differ only by a global phase after any operation $U$. No experiment can tell them apart: $\ket{\psi}$ and $\ket{\psi'}$ represent the same physical reality.
 
-  They also produce the same measurement statistics:
+### Relative phase
 
-  $$
-  \begin{cases}
-  0 & \text{w.p. } \frac{1}{2} \\
-  1 & \text{w.p. } \frac{1}{2}
-  \end{cases}
-  $$
+For comparison, consider
 
-  Are $\ket{+}$ and $\ket{-}$ the same state? No. In fact, you can find $U$ such that $U\ket{+} = \ket{0}$ and $U\ket{-} = \ket{1}$. Generally, the $e^{i\varphi}$ in $\ket{0} + e^{i\varphi}\ket{1}$ is called a **relative phase**.
+$$
+\ket{+} = \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}) \qquad\text{and}\qquad \ket{-} = \frac{1}{\sqrt{2}} (\ket{0} - \ket{1})
+$$
 
-**Remember**: global phase doesn't matter, relative phase matters!
+They also produce the same measurement statistics:
+
+$$
+\begin{cases}
+0 & \text{with probability } \frac{1}{2} \\
+1 & \text{with probability } \frac{1}{2}
+\end{cases}
+$$
+
+Are $\ket{+}$ and $\ket{-}$ the same state? No. You can find an operation $U$ with $U\ket{+} = \ket{0}$ and $U\ket{-} = \ket{1}$, for example $U = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$. Measuring after $U$ then tells the two states apart with certainty.
+
+The two states differ only in the sign in front of $\ket{1}$, and $-1 = e^{i\pi}$. In general, the $e^{i\varphi}$ in $\ket{0} + e^{i\varphi}\ket{1}$ is called a **relative phase**.
+
+:::note[Remember]
+Global phase doesn't matter, relative phase matters!
+:::
 
 ## Qubit geometry
-
-::source{lecture="1" pages="13-14"}
 
 Since we can ignore the global phase, any qubit state can be written as
 
@@ -156,16 +168,18 @@ $$
 \ket{\psi} = \underbrace{\cos\frac{\theta}{2}}_{\psi_0} \ket{0} + e^{i\varphi} \underbrace{\sin\frac{\theta}{2}}_{\psi_1} \ket{1}
 $$
 
-for some angles $\theta \in [0, \pi]$ and $\varphi \in [0, 2\pi)$. Note that $\psi_0 \in [0, 1]$ and $|\psi_0|^2 + |\psi_1|^2 = 1$. Also:
+for some angles $\theta \in [0, \pi]$ and $\varphi \in [0, 2\pi)$. To see this, multiply the state by a global phase that makes $\psi_0$ real and non-negative, so $\psi_0 \in [0, 1]$. Since $|\psi_0|^2 + |\psi_1|^2 = 1$, we can then write $\psi_0 = \cos\frac{\theta}{2}$ and $|\psi_1| = \sin\frac{\theta}{2}$, and $e^{i\varphi}$ is the phase of $\psi_1$. (The angle is halved so that $\theta$ becomes the polar angle on the Bloch sphere below.)
+
+At the two extreme values of $\theta$, something special happens:
 
 $$
 \begin{aligned}
 \theta = 0 &\implies \ket{\psi} = \ket{0} \\
-\theta = \pi &\implies \ket{\psi} = e^{i\varphi}\ket{1} \overset{\text{"up to global phase"}}{\sim} \ket{1}
+\theta = \pi &\implies \ket{\psi} = e^{i\varphi}\ket{1} \overset{\text{``up to global phase''}}{\sim} \ket{1}
 \end{aligned}
 $$
 
-In these two extreme cases the parameter $\varphi$ has become redundant. This is similar to how the longitude become irrelevant at the poles of the Earth, suggesting that qubit has the same topology as the sphere! Indeed, there is a one-to-one correspondence between qubit states $\ket{\psi} \in \C^2$ and unit vectors in $\R^3$:
+In both cases the parameter $\varphi$ has become redundant. This is similar to how longitude becomes irrelevant at the poles of the Earth, which suggests that a qubit has the same topology as a sphere! Indeed, there is a one-to-one correspondence between qubit states $\ket{\psi} \in \C^2$ (up to global phase)[^fix-1] and unit vectors in $\R^3$:
 
 $$
 \begin{pmatrix} \psi_0 \\ \psi_1 \end{pmatrix} \in \C^2 \quad\longrightarrow\quad \begin{pmatrix} 2\,\mathrm{Re}(\bar{\psi}_0 \psi_1) \\ 2\,\mathrm{Im}(\bar{\psi}_0 \psi_1) \\ |\psi_0|^2 - |\psi_1|^2 \end{pmatrix} \in \R^3
@@ -175,17 +189,17 @@ The resulting vector in $\R^3$ is called the **Bloch vector** of $\ket{\psi}$.
 
 ::pagebreak{lecture="1" page="14"}
 
-Going the other way:
+Going the other way, a unit vector $(x, y, z)$ corresponds to the state
 
 $$
 \frac{1}{\sqrt{2(z+1)}} \begin{pmatrix} z + 1 \\ x + iy \end{pmatrix} \in \C^2 \quad\longleftarrow\quad \begin{pmatrix} x \\ y \\ z \end{pmatrix} \in \R^3
 $$
 
+This formula needs $z \neq -1$. The remaining point $(0, 0, -1)$ corresponds to $\ket{1}$.[^fix-2]
+
 ## Bloch sphere
 
-::source{lecture="1" pages="14"}
-
-The correspondence is particularly elegant when expressed using the spherical coordinates:
+Since Bloch vectors are unit vectors, qubit states correspond to the points of the unit sphere, called the **Bloch sphere**. The correspondence is particularly elegant in spherical coordinates: the angles $\theta$ and $\varphi$ of the state are the angles of its Bloch vector.
 
 ![Bloch sphere with x, y, z axes; a bold unit vector from the origin at polar angle theta from the z axis and azimuthal angle phi from the x axis in the xy plane, with dashed projection lines](../../../assets/figures/L01-p14-1.png "w=468")
 
@@ -197,3 +211,8 @@ y = \sin\theta \sin\varphi \\
 z = \cos\theta
 \end{cases}
 $$
+
+For example, $\ket{0}$ is the north pole ($\theta = 0$), $\ket{1}$ is the south pole ($\theta = \pi$), and $\ket{+}$ and $\ket{-}$ sit at opposite points on the equator ($\theta = \frac{\pi}{2}$, with $\varphi = 0$ and $\varphi = \pi$).
+
+[^fix-1]: Corrected from the original notes, which leave out *up to global phase*. States that differ by a global phase have the same Bloch vector.
+[^fix-2]: Corrected from the original notes, which do not say that the formula fails at $z = -1$.

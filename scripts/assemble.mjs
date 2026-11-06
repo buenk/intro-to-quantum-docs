@@ -71,7 +71,9 @@ function parseTranscript(file, kind, num) {
 		}
 		if (pendingPage !== null) {
 			if (cur.hasContent) {
-				cur.lines.push('', `::pagebreak{${tag}="${num}" page="${pendingPage}"}`, '');
+				// indent like the content that follows, so a page break inside a list item stays inside it
+				const indent = /^\s*(\d+\.|[-*+])\s/.test(line) ? '' : line.match(/^\s*/)[0];
+				cur.lines.push('', `${indent}::pagebreak{${tag}="${num}" page="${pendingPage}"}`, '');
 			} else {
 				cur.startPage = pendingPage;
 				cur.pages = new Set([pendingPage]);
@@ -235,7 +237,8 @@ function frontmatter(obj) {
 	const lines = ['---'];
 	for (const [k, v] of Object.entries(obj)) {
 		if (v === undefined) continue;
-		if (typeof v === 'object' && v !== null) {
+		if (Array.isArray(v)) lines.push(`${k}: ${JSON.stringify(v)}`);
+		else if (typeof v === 'object' && v !== null) {
 			lines.push(`${k}:`);
 			for (const [k2, v2] of Object.entries(v)) lines.push(`  ${k2}: ${typeof v2 === 'string' ? esc(v2) : v2}`);
 		} else lines.push(`${k}: ${typeof v === 'string' ? esc(v) : v}`);
@@ -266,6 +269,25 @@ function bodyWithFootnotes(section, footnotes, prefix) {
 
 const pageAnchors = {}; // "lecture:3:Heading" → url#anchor (for the sources page)
 
+// ---------------------------------------------------------------- polished pages
+
+// Pages with `polished: true` in their frontmatter have had their wording edited by hand. They are
+// kept as they are instead of being regenerated, so update them by hand if a transcript changes.
+const polished = new Map(); // relativePath → { content, anchors }
+for (const dir of ['notes', 'exercises']) {
+	const d = path.join(DOCS, dir);
+	if (!fs.existsSync(d)) continue;
+	for (const f of fs.readdirSync(d).filter((f) => f.endsWith('.md'))) {
+		const content = fs.readFileSync(path.join(d, f), 'utf8');
+		const fm = content.match(/^---\n([\s\S]*?)\n---\n/);
+		if (!fm || !/^polished:\s*true\s*$/m.test(fm[1])) continue;
+		const slugger = new GithubSlugger();
+		const anchors = new Set([...content.matchAll(/^#{2,3} (.*)$/gm)].map((m) => slugger.slug(m[1])));
+		for (const m of content.matchAll(/assets\/figures\/([^)\s"]+\.png)/g)) usedFigures.add(m[1]);
+		polished.set(`${dir}/${f}`, { content, anchors });
+	}
+}
+
 // ---------------------------------------------------------------- notes pages
 
 const out = []; // [relativePath, content]
@@ -283,6 +305,9 @@ for (const [pi, part] of parts.entries()) {
 		const url = `/notes/${topic.slug}/`;
 		const slugger = new GithubSlugger();
 		const items = topic.notes.flatMap((ref) => resolveNotes(ref, where));
+		const kept = polished.get(`notes/${topic.slug}.md`);
+		// a polished page may have renamed its headings: link to the page itself then
+		const anchorUrl = (anchor) => (kept && !kept.anchors.has(anchor) ? url : `${url}#${anchor}`);
 		const lectPages = new Map();
 		for (const { section } of items) {
 			const set = lectPages.get(section.num) ?? new Set();
@@ -291,27 +316,27 @@ for (const [pi, part] of parts.entries()) {
 		}
 		const hasExercises = part.exercises?.some((g) => g.topic === topic.slug);
 		const exUrl = hasExercises ? `/exercises/${part.slug}/#${new GithubSlugger().slug(topic.title)}` : undefined;
-		const chips = [...lectPages].map(([n, ps]) => `L${pad(n)}:${pagesSpec(ps)}`).join(';');
+		const sources = [...lectPages].map(([n, ps]) => ({ lecture: n, pages: pagesSpec(ps) }));
 		const body = [];
-		body.push(`::pagesources{items="${chips}"${exUrl ? ` exercises="${exUrl}"` : ''}}`, '');
 		for (const { section, introHeading } of items) {
 			const heading = section.heading ?? introHeading ?? null;
 			if (heading) {
 				const disp = displayHeading(heading);
 				body.push(`## ${disp}`, '');
 				const anchor = slugger.slug(disp);
-				pageAnchors[`lecture:${section.num}:${section.heading ?? '(intro)'}`] = { url: `${url}#${anchor}`, title: topic.title, heading: disp };
+				pageAnchors[`lecture:${section.num}:${section.heading ?? '(intro)'}`] = { url: anchorUrl(anchor), title: topic.title, heading: disp };
 			} else {
 				pageAnchors[`lecture:${section.num}:(intro)`] = { url, title: topic.title, heading: null };
 			}
 			// register ### headings in the slugger so later anchors get the right suffixes
 			for (const l of section.lines) if (/^### /.test(l)) slugger.slug(displayHeading(l.slice(4)));
-			body.push(`::source{lecture="${section.num}" pages="${pagesSpec(section.pages)}"}`, '');
 			body.push(bodyWithFootnotes(section, {}, `L${section.num}`).replace(/^### (.*)$/gm, (_, h) => `### ${displayHeading(h)}`), '');
 		}
 		const fm = frontmatter({
 			title: topic.title,
 			description: topic.description,
+			sources,
+			exercisesLink: exUrl,
 		});
 		out.push([`notes/${topic.slug}.md`, fm + body.join('\n').replace(/\n{3,}/g, '\n\n')]);
 	}
@@ -352,7 +377,7 @@ for (const [pi, part] of parts.entries()) {
 				const anchor = slugger.slug(title);
 				if (s.exercise) exerciseAnchors[`sheet:${s.num}:${s.exercise}`] = { url: `${url}#${anchor}`, label: part.label, title };
 				else exerciseAnchors[`sheet:${s.num}:${s.heading}`] = { url: `${url}#${anchor}`, label: part.label, title };
-				body.push(`::source{sheet="${s.num}"${s.exercise ? ` exercise="${s.exercise}"` : ''} pages="${pagesSpec(s.pages)}"}`, '');
+				if (s.exercise) body.push(`::extag{sheet="${s.num}" exercise="${s.exercise}"}`, '');
 				if (s.cirq) {
 					body.push(':::note[Programming exercise]', 'This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).', ':::', '');
 				}
@@ -361,12 +386,13 @@ for (const [pi, part] of parts.entries()) {
 			}
 		}
 	}
-	const chips = [...sheetPages].sort((a, b) => a[0] - b[0]).map(([n, ps]) => `E${pad(n)}:${pagesSpec(ps)}`).join(';');
+	const sources = [...sheetPages].sort((a, b) => a[0] - b[0]).map(([n, ps]) => ({ sheet: n, pages: pagesSpec(ps) }));
 	const fm = frontmatter({
 		title: `Exercises: ${part.label}`,
 		description: `Exercises on ${part.summary.charAt(0).toLowerCase()}${part.summary.slice(1)}`,
+		sources,
 	});
-	out.push([`exercises/${part.slug}.md`, fm + [`::pagesources{label="Exercise sheets:" items="${chips}"}`, '', ...body].join('\n').replace(/\n{3,}/g, '\n\n')]);
+	out.push([`exercises/${part.slug}.md`, fm + body.join('\n').replace(/\n{3,}/g, '\n\n')]);
 }
 
 // ---------------------------------------------------------------- coverage checks
@@ -381,7 +407,7 @@ for (const [n, S] of Object.entries(sheetData))
 {
 	const body = [];
 	body.push(
-		'The exercise sheets of the course, regrouped by topic. Every exercise shows which sheet it comes from, and links to the original PDF.',
+		'The exercise sheets of the course, regrouped by topic. Every exercise shows which sheet it comes from, and the original sheets are linked at the bottom of each page.',
 		''
 	);
 	for (const [pi, part] of parts.entries()) {
@@ -395,7 +421,6 @@ for (const [n, S] of Object.entries(sheetData))
 		'Several sheets contain programming exercises (marked *Cirq*). Only their titles appear on the sheets. Exercise sheet 5 explains:',
 		''
 	);
-	body.push(`::source{sheet="5" pages="${cirqIntro?.page ?? 2}"}`, '');
 	body.push(`> ${cirqIntro?.text ?? ''}`, '');
 	body.push('## All exercise sheets', '');
 	body.push('| Sheet | Exercises | Original |', '| --- | --- | --- |');
@@ -438,7 +463,7 @@ for (const [n, S] of Object.entries(sheetData))
 	for (const [n, L] of Object.entries(lectureData)) {
 		const pages = Math.max(...L.sections.flatMap((s) => [...s.pages]));
 		body.push(`### Lecture ${n}`, '', `*${lectureTitles[n] ?? ''}*`, '');
-		body.push(`::source{lecture="${n}" pages="1-${pages}"}`, '');
+		body.push(`[Open the PDF](/pdfs/lectures/L${pad(n)}.pdf) · ${pages} pages`, '');
 		for (const s of L.sections) {
 			const a = pageAnchors[`lecture:${n}:${s.heading ?? '(intro)'}`];
 			if (!a) continue;
@@ -451,7 +476,7 @@ for (const [n, S] of Object.entries(sheetData))
 	for (const [n, S] of Object.entries(sheetData)) {
 		const pages = Math.max(...S.sections.flatMap((s) => [...s.pages]));
 		body.push(`### Exercise sheet ${n}`, '');
-		body.push(`::source{sheet="${n}" pages="1-${pages}"}`, '');
+		body.push(`[Open the PDF](/pdfs/exercises/E${pad(n)}.pdf) · ${pages} page${pages > 1 ? 's' : ''}`, '');
 		for (const s of S.sections) {
 			const key = s.exercise ? `sheet:${n}:${s.exercise}` : `sheet:${n}:${s.heading}`;
 			const a = exerciseAnchors[key];
@@ -480,19 +505,17 @@ for (const [n, S] of Object.entries(sheetData))
 				`\t<LinkCard title="${roman[i]} · ${p.label.replace(/"/g, '&quot;')}" description="${p.topics.map((t) => t.title).join(' · ').replace(/"/g, '&quot;')}" href={withBase('/notes/${p.topics[0].slug}/')} />`
 		)
 		.join('\n');
-	const nTopics = parts.reduce((a, p) => a + p.topics.length, 0);
-	const nEx = Object.values(sheetData).reduce((a, S) => a + S.sections.filter((s) => s.exercise).length, 0);
-	const nPages = Object.values(lectureData).reduce((a, L) => a + Math.max(...L.sections.flatMap((s) => [...s.pages])), 0);
 	const page = `---
 title: Introduction to Quantum Computing
 description: Lecture notes and exercises of the Introduction to Quantum Computing course, organised by topic.
 template: splash
 hero:
+  layout: media-right
   image:
     light: ../../assets/hero-bloch-light.png
     dark: ../../assets/hero-bloch-dark.png
     alt: The Bloch sphere, as drawn in Lecture 1
-  tagline: The handwritten lecture notes and exercise sheets, transcribed and organised by topic. Every section links back to its original page.
+  tagline: The handwritten lecture notes and exercise sheets, transcribed and organised by topic. Every page links back to the original notes.
   actions:
     - text: Start reading
       link: notes/introduction/
@@ -507,24 +530,9 @@ hero:
       icon: document
 ---
 
-import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 export const withBase = (p) => import.meta.env.BASE_URL.replace(/\\/$/, '') + p;
-
-<CardGrid stagger>
-	<Card title="${nTopics} topics" icon="open-book">
-		${nPages} handwritten pages from 13 lectures, regrouped by subject into ${parts.length} parts.
-	</Card>
-	<Card title="${nEx} exercises" icon="pencil">
-		All 13 exercise sheets, regrouped by topic and linked to the notes they practise.
-	</Card>
-	<Card title="Faithful to the originals" icon="document">
-		The wording and explanations are the lecturer's own. Every section names its lecture and page, and can show the original scan.
-	</Card>
-	<Card title="Math that reads well" icon="star">
-		All formulas are typeset with KaTeX; circuits and pictures are taken from the notes themselves.
-	</Card>
-</CardGrid>
 
 ## Lecture notes by topic
 
@@ -534,9 +542,9 @@ ${cards}
 
 ## How to read this site
 
-- **By topic:** use the sidebar. Each page starts with the lectures it was compiled from, and every section names its source with a link to the original PDF.
+- **By topic:** use the sidebar. At the bottom of each page you find the lecture and pages it was transcribed from, with a link to the original PDF.
 - **By lecture:** the [sources page](sources/) lists each lecture section by section, with links to where it now lives.
-- **Originals:** under every section heading, *Show the original handwritten page* reveals the scanned page.
+- **Originals:** at the bottom of each page, *Show the original pages* reveals the scans of the handwritten notes.
 - **Exercises:** each topic links to its [exercises](exercises/), grouped the same way.
 `;
 	out.push(['index.mdx', page]);
@@ -552,7 +560,7 @@ for (const dir of ['notes', 'exercises']) fs.rmSync(path.join(DOCS, dir), { recu
 for (const [rel, content] of out) {
 	const p = path.join(DOCS, rel);
 	fs.mkdirSync(path.dirname(p), { recursive: true });
-	fs.writeFileSync(p, content);
+	fs.writeFileSync(p, polished.get(rel)?.content ?? content);
 }
 fs.rmSync(FIG_OUT, { recursive: true, force: true });
 fs.mkdirSync(FIG_OUT, { recursive: true });

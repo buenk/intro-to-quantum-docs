@@ -1,16 +1,13 @@
 ---
 title: "Density matrices and mixed states"
 description: "The density matrix, mixed states, the Bloch ball and mixed states of dimension d."
+polished: true
+sources: [{"lecture":13,"pages":"1-5"}]
+exercisesLink: "/exercises/mixed-states/#density-matrices-and-mixed-states"
 ---
-::pagesources{items="L13:1-5" exercises="/exercises/mixed-states/#density-matrices-and-mixed-states"}
-
-::source{lecture="13" pages="1"}
-
-If quantum mechanics really describes the world, it should also capture classical probabilistic processes. In particular, probabilistic bits should occur as a special case of qubits. However, this is not the case in our current formalism.
+If quantum mechanics really describes the world, it should also capture classical probabilistic processes. In particular, [probabilistic bits](/notes/probabilistic-bits/) should occur as a special case of qubits. However, this is not the case in our current formalism.
 
 ## Density matrix
-
-::source{lecture="13" pages="1"}
 
 If we measure $\ket{\psi} \in \C^d$ in the standard basis, we get outcome $k \in \{1, \dots, d\}$ with probability
 
@@ -23,17 +20,15 @@ p_k = \abs{\braket{k|\psi}}^2 &= \braket{k|\psi} \cdot \overline{\braket{k|\psi}
 \end{aligned}
 $$
 
-where $\rho := \ket{\psi}\!\bra{\psi}$ is called the **density matrix** of $\ket{\psi}$. If we were to measure $\ket{\psi}$ in any other orthonormal basis $\ket{b_1}, \dots, \ket{b_d}$, the outcome probabilities can still be obtained from $\rho$ using a similar formula: $\braket{b_k|\rho|b_k}$.
+where $\rho := \ket{\psi}\!\bra{\psi}$ is called the **density matrix** of $\ket{\psi}$. If we measure $\ket{\psi}$ in any other orthonormal basis $\ket{b_1}, \dots, \ket{b_d}$ instead, the outcome probabilities can still be obtained from $\rho$ with a similar formula: outcome $k$ has probability $\braket{b_k|\rho|b_k}$.
 
-Conveniently, $\rho$ does not depend on the global phase of $\ket{\psi}$ since $(e^{i\varphi}\ket{\psi})^\dagger = e^{-i\varphi}\bra{\psi}$, so it cancels out.
+Conveniently, $\rho$ does not depend on the [global phase](/notes/qubits/#global-phase) of $\ket{\psi}$: since $(e^{i\varphi}\ket{\psi})^\dagger = e^{-i\varphi}\bra{\psi}$, the two phases cancel out in $\ket{\psi}\!\bra{\psi}$.
 
 ## Mixed states
 
-::source{lecture="13" pages="2"}
+Let $\ket{\psi_1}, \dots, \ket{\psi_n} \in \C^d$ be arbitrary states and let $q_1, \dots, q_n \in [0,1]$ be a probability distribution (that is, $q_i \geq 0$ and $\sum_{i=1}^n q_i = 1$). The states $\ket{\psi_i}$ together with the probabilities $q_i$ are called an **ensemble**.
 
-Let $\ket{\psi_1}, \dots, \ket{\psi_n} \in \C^d$ be arbitrary states and let $q_1, \dots, q_n \in [0,1]$ be a probability distribution (i.e., $q_i \geq 0$ and $\sum_{i=1}^n q_i = 1$). We call the states $\ket{\psi_i}$ together with the probabilities $q_i$ an **ensemble**.
-
-What are the outcome probabilities if you pick the state $\ket{\psi_i}$ with probability $q_i$ and measure in the standard basis? You get $k \in \{1, \dots, d\}$ with probability
+What are the outcome probabilities if you pick the state $\ket{\psi_i}$ with probability $q_i$ and measure it in the standard basis? You get $k \in \{1, \dots, d\}$ with probability
 
 $$
 \begin{aligned}
@@ -43,13 +38,11 @@ p_k &= \sum_{i=1}^n q_i \abs{\braket{k|\psi_i}}^2 \\
 \end{aligned}
 $$
 
-In this case, we can also define a density matrix that fully determines the outcome probabilities. We call the states $\ket{\psi_i}$ **pure** and $\rho$ **mixed** because $\rho$ is a probability distribution or "mixture" over pure states.
+So in this case too, we can define a density matrix $\rho$ that fully determines the outcome probabilities. We call the states $\ket{\psi_i}$ **pure** and $\rho$ **mixed**, because $\rho$ is a probability distribution, or "mixture", over pure states.
 
 ## Bloch ball
 
-::source{lecture="13" pages="2-4"}
-
-We can generalize the Bloch sphere representation of pure states from Lecture 1 to mixed states. Recall from Homework 3 that
+We can generalize the [Bloch sphere](/notes/qubits/#bloch-sphere) representation of pure states from Lecture 1 to mixed states. Recall from Homework 3 that
 
 $$
 \vec{r} = \begin{pmatrix} x \\ y \\ z \end{pmatrix} \in \R^3 \iff \ket{\psi(\vec{r})} = \frac{1}{\sqrt{2(z+1)}} \begin{pmatrix} z+1 \\ x+iy \end{pmatrix} \in \C^2
@@ -57,9 +50,9 @@ $$
 
 ::pagebreak{lecture="13" page="3"}
 
-establishes a correspondence between unit vectors in $\R^3$ (i.e., $x^2+y^2+z^2=1$) and unit vectors in $\C^2$ with the global phase ignored (also known as the complex projective space).
+establishes a correspondence between unit vectors in $\R^3$ (that is, $x^2+y^2+z^2=1$) and unit vectors in $\C^2$ with the global phase ignored (also known as the complex projective space).
 
-You showed in Homework 3 that the density matrix of $\ket{\psi(\vec{r})}$ is given by
+You showed in Homework 3 that the density matrix of $\ket{\psi(\vec{r})}$ is
 
 $$
 \rho(\vec{r}) = \ket{\psi(\vec{r})}\!\bra{\psi(\vec{r})} = \frac{1}{2}(I + xX + yY + zZ)
@@ -79,7 +72,7 @@ $$
 \end{aligned}
 $$
 
-For example, if $\vec{r}_1 = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}$, $\vec{r}_2 = \begin{pmatrix} 0 \\ 0 \\ -1 \end{pmatrix}$, and $q_1 = q_2 = \frac{1}{2}$ then
+In other words, the Bloch vector of the mixture is the weighted average $q_1 \vec{r}_1 + q_2 \vec{r}_2$ of the two Bloch vectors. For example, if $\vec{r}_1 = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}$ and $\vec{r}_2 = \begin{pmatrix} 0 \\ 0 \\ -1 \end{pmatrix}$ (the Bloch vectors of $\ket{0}$ and $\ket{1}$) and $q_1 = q_2 = \frac{1}{2}$, then
 
 $$
 q_1 \vec{r}_1 + q_2 \vec{r}_2 = \frac{1}{2}\begin{pmatrix} 0 \\ 0 \\ 1-1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}.
@@ -95,16 +88,16 @@ $$
 \frac{1}{2}\ket{0}\!\bra{0} + \frac{1}{2}\ket{1}\!\bra{1} = \frac{1}{2}\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \frac{1}{2} I.
 $$
 
-Note that it can be obtained from other states as well:
+It can be obtained from other states as well, for example from $\ket{+}$ and $\ket{-}$:
 
 $$
 \frac{1}{2}\ket{+}\!\bra{+} + \frac{1}{2}\ket{-}\!\bra{-} = \frac{1}{2}\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}.
 $$
 
-Note that $\ket{+} \Rightarrow \vec{r}_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$ and $\ket{-} \Rightarrow \vec{r}_2 = \begin{pmatrix} -1 \\ 0 \\ 0 \end{pmatrix}$, so
+Indeed, the Bloch vectors of $\ket{+}$ and $\ket{-}$ are $\vec{r}_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$ and $\vec{r}_2 = \begin{pmatrix} -1 \\ 0 \\ 0 \end{pmatrix}$, so their average
 
 $$
-\frac{1}{2} r_1 + \frac{1}{2} r_2 = \frac{1}{2}\begin{pmatrix} 1-1 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}
+\frac{1}{2} \vec{r}_1 + \frac{1}{2} \vec{r}_2 = \frac{1}{2}\begin{pmatrix} 1-1 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}
 $$
 
 is also at the origin.
@@ -115,11 +108,11 @@ $$
 \frac{1}{2}\rho(\vec{r}) + \frac{1}{2}\rho(-\vec{r}) = \frac{1}{2} I
 $$
 
-for any $\vec{r} \in \R^3$. Recall from Homework 3 that $\{\ket{\psi(\vec{r})}, \ket{\psi(-\vec{r})}\}$ is an orthonormal basis, for any unit vector $\vec{r}$.
+for any $\vec{r} \in \R^3$. Recall from Homework 3 that $\{\ket{\psi(\vec{r})}, \ket{\psi(-\vec{r})}\}$ is an orthonormal basis for any unit vector $\vec{r}$, so an equal mixture of the two states of such a basis is always the maximally mixed state.
 
-Any $\vec{r} \in \R^3$ such that $\norm{\vec{r}} \leq 1$ describes a valid quantum state. Together they form the **Bloch ball**.
+Any $\vec{r} \in \R^3$ such that $\norm{\vec{r}} \leq 1$ describes a valid quantum state $\rho(\vec{r})$. Together these vectors form the **Bloch ball**.
 
-Intuitively, the length $\norm{\vec{r}}$ of the Bloch vector measures the "purity" of the state $\rho(\vec{r})$.
+Intuitively, the length $\norm{\vec{r}}$ of the Bloch vector measures the "purity" of the state $\rho(\vec{r})$:
 
 ![Small Bloch ball with points on the surface, inside, and at the centre, matching the three cases below](../../../assets/figures/L13-p04-1.png "w=113")
 
@@ -127,13 +120,11 @@ Intuitively, the length $\norm{\vec{r}}$ of the Bloch vector measures the "purit
 - $\norm{\vec{r}} < 1 \Rightarrow$ mixed
 - $\norm{\vec{r}} = 0 \Rightarrow$ maximally mixed
 
-The eigenvalues of $\rho(\vec{r})$ are $\frac{1}{2}(1 \pm \norm{\vec{r}})$, which are $\{0, 1\}$ for pure states and $\{\frac{1}{2}, \frac{1}{2}\}$ for max. mixed.
+The eigenvalues of $\rho(\vec{r})$ are $\frac{1}{2}(1 \pm \norm{\vec{r}})$, which are $\{0, 1\}$ for pure states and $\{\frac{1}{2}, \frac{1}{2}\}$ for the maximally mixed state.
 
 ## Mixed states of dimension d
 
-::source{lecture="13" pages="5"}
-
-When does a matrix $\rho \in M_d(\C)$ describe a valid mixed state?
+When does a matrix $\rho \in M_d(\C)$ describe a valid mixed state? It has to satisfy three conditions:
 
 - $\rho$ is Hermitian: $\left(\sum_{i=1}^n q_i \ket{\psi_i}\!\bra{\psi_i}\right)^\dagger = \sum_{i=1}^n q_i \ket{\psi_i}\!\bra{\psi_i}$.
 - Measurement probabilities in any basis are non-negative:
@@ -148,18 +139,18 @@ When does a matrix $\rho \in M_d(\C)$ describe a valid mixed state?
   \sum_{k=1}^d \braket{k|\rho|k} = 1
   $$
 
-Matrices obeying the first two properties are called **positive semidefinite**. This constraint is abbreviated as $\rho \geq 0$. (This does not mean $\rho$ is entry-wise non-negative.) This is equivalent to $\rho$ being Hermitian, $\rho^\dagger = \rho$, and having non-negative eigenvalues.
+Matrices with the first two properties are called **positive semidefinite**, and this constraint is written $\rho \geq 0$. (This does not mean that the entries of $\rho$ are non-negative.) Equivalently, $\rho$ is Hermitian, $\rho^\dagger = \rho$, and has non-negative eigenvalues.
 
-The third condition is abbreviated as $\Tr \rho = 1$ where
+The third condition is written $\Tr \rho = 1$, where
 
 $$
 \Tr \rho := \sum_{k=1}^d \rho_{kk}
 $$
 
-is called the **trace** of $\rho$. It's just the sum of the diagonal entries.
+is called the **trace** of $\rho$. It is just the sum of the diagonal entries.
 
-You can think of mixed states as "non-commutative" probability distributions. Diagonal states represent actual prob. distributions:
+You can think of mixed states as "non-commutative" probability distributions. Diagonal states represent actual probability distributions (for $d = 2$, a [probabilistic bit](/notes/probabilistic-bits/)):
 
 $$
-\rho = \begin{pmatrix} p_1 & & 0 \\ & p_2 & \\ 0 & & \ddots \\ & & & p_d \end{pmatrix}
+\rho = \begin{pmatrix} p_1 & & & 0 \\ & p_2 & & \\ & & \ddots & \\ 0 & & & p_d \end{pmatrix}
 $$

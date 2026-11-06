@@ -1,20 +1,19 @@
 ---
 title: "Quantum Fourier transform"
 description: "The quantum Fourier transform, its circuit, and the discrete Fourier transform."
+polished: true
+sources: [{"lecture":10,"pages":"6-7"}]
+exercisesLink: "/exercises/shor/#quantum-fourier-transform"
 ---
-::pagesources{items="L10:6-7" exercises="/exercises/shor/#quantum-fourier-transform"}
-
 ## Quantum Fourier transform
 
-::source{lecture="10" pages="6"}
-
-We defined the $n$-qubit quantum Fourier transform as
+In [phase estimation](/notes/phase-estimation/) we defined the $n$-qubit quantum Fourier transform as
 
 $$
 \mathrm{QFT}\ket{b_1, b_2, \ldots, b_n} = \ket{\varphi_1} \otimes \ket{\varphi_2} \otimes \ldots \otimes \ket{\varphi_n},
 $$
 
-for all $b_1, b_2, \ldots, b_n \in \{0,1\}$ where
+for all $b_1, b_2, \ldots, b_n \in \{0,1\}$, where $b = 0.b_1 b_2 \ldots b_n$ in binary and
 
 $$
 \ket{\varphi_{n-k}} = \frac{1}{\sqrt{2}} \left(\ket{0} + e^{2\pi i \cdot \underbrace{2^k \cdot b}_{0.b_{k+1} \ldots b_n}}\ket{1}\right)
@@ -34,15 +33,13 @@ For example, $R_0 = I$, $R_1 = Z$, $R_2 = S$.
 
 ## Discrete Fourier transform
 
-::source{lecture="10" pages="6-7"}
-
-Quantum Fourier transform is a special case of the discrete Fourier transform which exists for any matrix size $M \geq 1$, not just $M = 2^n$:
+The quantum Fourier transform is a special case of the **discrete Fourier transform**, which exists for any matrix size $M \geq 1$, not just $M = 2^n$:
 
 $$
 \mathrm{QFT}(n) = D(2^n)
 $$
 
-$D(M)$ is an $M \times M$ complex matrix.
+Here $D(M)$ is an $M \times M$ complex matrix.
 
 ::pagebreak{lecture="10" page="7"}
 
@@ -58,7 +55,7 @@ $$
 (D^\dagger)_{jk} = \frac{1}{\sqrt{M}} \omega_M^{-jk}
 $$
 
-We can easily write down the matrix for $D$:
+We can easily write down the matrix for $D$, writing $\omega$ for $\omega_M$:
 
 $$
 D(M) = \frac{1}{\sqrt{M}} \begin{pmatrix}
@@ -71,16 +68,16 @@ D(M) = \frac{1}{\sqrt{M}} \begin{pmatrix}
 \end{pmatrix}
 $$
 
-It is not obvious that $D$ is unitary (exercise) and that $D(2^n)$ agrees with what is implemented by $\mathrm{QFT}(n)$ (exercise).
+It is not obvious that $D$ is unitary, or that $D(2^n)$ agrees with what is implemented by $\mathrm{QFT}(n)$; both are exercises.
 
-The intuition behind the discrete Fourier transform is as follows. The entries in each row of $D$ correspond to points on the unit circle that run around it at increasingly high speeds. If $\ket{y} = D\ket{x}$ then
-
-![Five planes each showing a unit circle with a point at a different position, connected by a grey curve](../../../assets/figures/L10-p07-1.png "w=308")
-
-each entry of $\ket{y} \in \C^M$,
+The intuition behind the discrete Fourier transform is as follows. The entries in each row of $D$ correspond to points on the unit circle that run around it at increasingly high speeds. If $\ket{y} = D\ket{x}$, then each entry of $\ket{y} \in \C^M$,
 
 $$
 y_j = \frac{1}{\sqrt{M}} \sum_{k=0}^{M-1} \omega^{jk} x_k,
 $$
 
-is the inner product of $\ket{x} \in \C^M$ with a spiral of a certain period. This value is large if $\ket{x}$ oscillates with a similar period.
+is the inner product of $\ket{x} \in \C^M$ with a spiral of a certain period:
+
+![Five planes each showing a unit circle with a point at a different position, connected by a grey curve](../../../assets/figures/L10-p07-1.png "w=308")
+
+This value is large if $\ket{x}$ oscillates with a similar period.

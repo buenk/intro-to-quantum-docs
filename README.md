@@ -1,14 +1,16 @@
 # Introduction to Quantum Computing — lecture notes & exercises
 
 A documentation website for the handwritten lecture notes and exercise sheets of the
-*Introduction to Quantum Computing* course, built with [Astro Starlight](https://starlight.astro.build)
-and the [Nova theme](https://starlight-theme-nova.pages.dev/).
+*Introduction to Quantum Computing* course, built with [Astro Starlight](https://starlight.astro.build),
+the [Black theme](https://starlight-theme-black.vercel.app/) and the
+[Libron](https://github.com/nicoverbruggen/libron) typeface.
 
 - **Organised by topic, not by lecture.** 35 topic pages in 9 parts, plus 9 exercise pages.
 - **Faithful.** The wording and explanations are the lecturer's own, transcribed verbatim.
-- **Traceable.** Every section shows which lecture (or exercise sheet) and which page it came
-  from, links to the original PDF at that page, and can expand the scanned original page inline.
-  The [sources page](src/content/docs/sources.md) maps every lecture section to its new home.
+- **Traceable.** The bottom of every page names the lecture (or exercise sheets) and pages it was
+  transcribed from, links to the original PDFs, and can expand the scanned original pages.
+  Thin page markers in the text show where each handwritten page starts, and the
+  [sources page](src/content/docs/sources.md) maps every lecture section to its new home.
 - **Math** is typeset with KaTeX; circuits, Bloch spheres and diagrams are cropped from the
   notes themselves (they invert automatically in dark mode, and zoom on click).
 
@@ -84,12 +86,33 @@ Available in any page (and used by the transcripts):
 | `$…$`, `$$…$$` | KaTeX math. Macros: `\ket`, `\bra`, `\braket`, `\ketbra{a}{b}`, `\abs`, `\norm`, `\Tr`, `\C`, `\R`, … ([list](src/katex-macros.json)) |
 | `:::definition[Name]` … `:::` | Definition box (also `:::theorem[Lemma]`, `:::example`, `:::proof`, `:::exercise`) |
 | `:::note` … `:::` | Starlight aside (also `tip`, `caution`, `danger`) |
-| `::source{lecture="3" pages="2-4"}` | Source badge: lecture + pages, PDF links, expandable original scans |
-| `::source{sheet="4" exercise="2" pages="1"}` | Same, for an exercise sheet |
+| `::extag{sheet="4" exercise="2"}` | Small "Exercise sheet 4 · Exercise 2" label under an exercise title |
 | `::pagebreak{lecture="3" page="5"}` | Marks where a handwritten page starts |
 | `![alt](path "w=320")` | Figure, displayed 320 px wide |
+
+The sources block at the bottom of a page comes from its frontmatter (rendered by
+[`src/components/Footer.astro`](src/components/Footer.astro)):
+
+```yaml
+sources: [{ "lecture": 1, "pages": "9-14" }]        # or { "sheet": 4, "pages": "1-3" }
+exercisesLink: "/exercises/foundations/#qubits-and-the-bloch-sphere"   # optional
+```
+
+## Theme and fonts
+
+- Theme: [`starlight-theme-black`](https://github.com/adrian-ub/starlight-theme-black). Its
+  `<Head>` override is replaced by [`src/components/Head.astro`](src/components/Head.astro)
+  (registered by the small `qdocs-head` plugin in `astro.config.mjs`) so that Libron is loaded
+  instead of Geist Sans.
+- Text font: **Libron**, self-hosted from [`src/assets/fonts/libron/`](src/assets/fonts/libron/)
+  through Astro's Fonts API. Code uses Geist Mono (from the theme).
+- Site-specific styles (boxes, source badges, figures, typography fixes) live in
+  [`src/styles/custom.css`](src/styles/custom.css).
 
 ## Credits
 
 Lecture notes and exercise sheets: the course lecturer(s) of *Introduction to Quantum
 Computing*. This site only re-typesets and reorganises them; all content belongs to its authors.
+
+Libron © 2026 Nico Verbruggen, based on Readerly and Newsreader, licensed under the
+[SIL Open Font License 1.1](src/assets/fonts/libron/OFL.txt) (Reserved Font Name "Libron").

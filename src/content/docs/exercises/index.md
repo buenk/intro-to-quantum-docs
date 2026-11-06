@@ -2,7 +2,7 @@
 title: "Exercises"
 description: "All exercises of the course, organised by topic."
 ---
-The exercise sheets of the course, regrouped by topic. Every exercise shows which sheet it comes from, and links to the original PDF.
+The exercise sheets of the course, regrouped by topic. Every exercise shows which sheet it comes from, and the original sheets are linked at the bottom of each page.
 
 - **[Foundations](/exercises/foundations/)** — 9 exercises, from sheet 1
 - **[Linear algebra](/exercises/linear-algebra/)** — 7 exercises, from sheet 2
@@ -17,8 +17,6 @@ The exercise sheets of the course, regrouped by topic. Every exercise shows whic
 ## Programming exercises
 
 Several sheets contain programming exercises (marked *Cirq*). Only their titles appear on the sheets. Exercise sheet 5 explains:
-
-::source{sheet="5" pages="2"}
 
 > You can access the following exercises through the course *Canvas* page. There you can also find a link to *CodeGrade* where you should submit your solutions (they will be checked and graded automatically). You should implement your solutions in Cirq. Always make sure you base your solution on the template file provided on *CodeGrade*!
 

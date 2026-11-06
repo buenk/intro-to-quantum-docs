@@ -1,12 +1,11 @@
 ---
 title: "Quantum gates"
 description: "Logical gates, single- and multi-qubit quantum gates, and local operations."
+polished: true
+sources: [{"lecture":4,"pages":"1-3"}]
+exercisesLink: "/exercises/circuits/#quantum-gates"
 ---
-::pagesources{items="L04:1-3" exercises="/exercises/circuits/#quantum-gates"}
-
 ## Logical gates
-
-::source{lecture="4" pages="1"}
 
 **Logical gates** model elementary computational steps in digital electronic circuits. For example:
 
@@ -22,9 +21,9 @@ description: "Logical gates, single- and multi-qubit quantum gates, and local op
 | 10 | 0 | 1 | 1 |
 | 11 | 1 | 1 | 0 |
 
-Algebraically (modulo 2): $\mathrm{NOT}(x) = x+1$, $\mathrm{AND}(x,y) = x \cdot y$, $\mathrm{XOR}(x,y) = x+y$.
+Algebraically, with arithmetic modulo 2, we have $\mathrm{NOT}(x) = x+1$, $\mathrm{AND}(x,y) = x \cdot y$, $\mathrm{XOR}(x,y) = x+y$.
 
-Any **Boolean function** $f\colon \{0,1\}^n \to \{0,1\}$ can be expressed using just AND, OR, NOT. For example, equality:
+Any **Boolean function** $f\colon \{0,1\}^n \to \{0,1\}$ can be expressed using just AND, OR and NOT. For example, take the equality function:
 
 | $xy$ | EQ$(x,y)$ |
 |:---:|:---:|
@@ -33,17 +32,19 @@ Any **Boolean function** $f\colon \{0,1\}^n \to \{0,1\}$ can be expressed using 
 | 10 | 0 |
 | 11 | 1 |
 
+It is 1 exactly on the rows $00$ and $11$:
+
 $$
 \mathrm{EQ}(x,y) = 1 \iff x = y \iff (x=0 \text{ and } y=0) \text{ or } (x=1 \text{ and } y=1)
 $$
 
-This gives the formula:
+This gives the formula
 
 $$
 \mathrm{EQ}(x,y) = \mathrm{OR}\big(\mathrm{AND}(\mathrm{NOT}(x), \mathrm{NOT}(y)),\ \mathrm{AND}(x,y)\big)
 $$
 
-On the **Boolean circuit**:
+which can be drawn as a **Boolean circuit**:
 
 ![Boolean circuit for EQ(x,y): x and y each feed a NOT gate, the two NOT outputs feed an AND gate, x and y also feed a second AND gate, and both AND outputs feed an OR gate whose output is EQ(x,y)](../../../assets/figures/L04-p01-1.png "w=654")
 
@@ -51,25 +52,21 @@ Since this construction works for any Boolean function, $\{\mathrm{AND},\mathrm{
 
 ## Single-qubit gates
 
-::source{lecture="4" pages="2"}
+We saw in Lecture 1 that a [general one-qubit operation](/notes/qubits/#general-qubit-operation) is of the form $U = \begin{pmatrix} a & c \\ b & d \end{pmatrix}$, where $a,b,c,d \in \C$ are such that $\abs{a}^2 + \abs{b}^2 = 1$, $\abs{c}^2 + \abs{d}^2 = 1$ and $a\bar{c} + b\bar{d} = 0$. This is equivalent to $U^\dagger U = I$, meaning that $U$ is unitary.
 
-We saw in Lecture 1 that a general one-qubit operation is of the form $U = \begin{pmatrix} a & c \\ b & d \end{pmatrix}$ where $a,b,c,d \in \C$ are such that $\abs{a}^2 + \abs{b}^2 = 1$, $\abs{c}^2 + \abs{d}^2 = 1$, $a\bar{c} + b\bar{d} = 0$. This is equivalent to $U^\dagger U = I$, meaning $U$ is unitary.
-
-Thus, a **one-qubit gate** is any $2\times 2$ unitary.
-
-Expanded in the computational basis:
+Thus, a **one-qubit gate** is any $2\times 2$ unitary. Expanded in the computational basis, it is
 
 $$
 U = \sum_{i,j=0}^{1} U_{i,j} \ket{i}\!\bra{j}
 $$
 
+with the input $j$ on the right and the output $i$ on the left. In the same way, if we first apply $U$ and then $V$, the output state is
+
 $$
 \ket{\psi_\text{out}} = VU\ket{\psi_\text{in}}
 $$
 
-*(← time)*
-
-Graphical notation:
+So in formulas, time runs from right to left. In the graphical notation for circuits, it runs from left to right:
 
 ![Circuit: a single gate U with input wire labelled j and output wire labelled i, and a circuit with input state psi_in, gate U, then gate V, giving psi_out, with a time arrow pointing right](../../../assets/figures/L04-p02-1.png "w=355")
 
@@ -104,11 +101,9 @@ $$
 You can check that $X^2 = Y^2 = Z^2 = I$ and $XY = -YX = iZ$.
 :::
 
-Note: They are closely related to quaternions.
+The Pauli matrices are closely related to the quaternions.
 
 ## Multi-qubit quantum gates
-
-::source{lecture="4" pages="3"}
 
 A **two-qubit gate** is a $4\times 4$ unitary matrix:
 
@@ -119,27 +114,25 @@ U &= \sum_{i,j,k,l=0}^{1} U_{ij,kl} \overbrace{\ket{i,j}}^{\text{output}} \under
 \end{aligned}
 $$
 
-*(← time)*
+Again, time runs from right to left in the formula and from left to right in the circuit:
 
 ![Circuit: a two-qubit gate U with input wires k and l on the left and output wires i and j on the right; time arrow to the right, space (registers) arrow pointing down](../../../assets/figures/L04-p03-1.png "w=349")
 
 :::example
+The 2-qubit identity operation is
+
 $$
 \ket{00}\!\bra{00} + \ket{01}\!\bra{01} + \ket{10}\!\bra{10} + \ket{11}\!\bra{11} =
 \begin{pmatrix} 1 & & & \\ & 1 & & \\ & & 1 & \\ & & & 1 \end{pmatrix}
 \begin{matrix} \ket{00} \\ \ket{01} \\ \ket{10} \\ \ket{11} \end{matrix}
 $$
-
-is the 2-qubit identity operation.
 :::
 
 Similarly, an $n$-qubit gate is a $2^n \times 2^n$ unitary. It has $n$ input and $n$ output qubits.
 
 ## Local operations
 
-::source{lecture="4" pages="3"}
-
-If a 1-qubit gate is applied **locally** on one of two qubits, we can write it as a 2-qubit unitary:
+If a 1-qubit gate $U$ is applied **locally** on one of two qubits, we can write it as a 2-qubit unitary by taking its tensor product with $I$ on the other qubit:
 
 $$
 \underbrace{\overset{1}{U} \otimes \overset{2}{I}}_{\text{1st qubit}}

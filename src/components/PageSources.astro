@@ -1,0 +1,95 @@
+---
+// One block at the bottom of a page: which lecture(s) / exercise sheet(s) the page was
+// transcribed from, links to the original PDFs, and the scanned original pages.
+interface Props {
+	sources: Array<{ lecture?: number; sheet?: number; pages: string }>;
+	exercisesLink?: string | undefined;
+	polished?: boolean | undefined;
+}
+const { sources, exercisesLink, polished } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pad = (n: number) => String(n).padStart(2, '0');
+const range = (spec: string) => {
+	const [a, b] = spec.split('-').map(Number);
+	const pages: number[] = [];
+	for (let p = a; p <= (b || a); p++) pages.push(p);
+	return pages;
+};
+
+const items = sources.map((s) => {
+	const isLecture = s.lecture !== undefined;
+	const n = (isLecture ? s.lecture : s.sheet) as number;
+	const id = `${isLecture ? 'L' : 'E'}${pad(n)}`;
+	const pages = range(s.pages);
+	const pdf = `${base}/pdfs/${isLecture ? 'lectures' : 'exercises'}/${id}.pdf`;
+	return {
+		name: isLecture ? `Lecture ${n}` : `Exercise sheet ${n}`,
+		short: isLecture ? `Lecture ${n}` : `Sheet ${n}`,
+		pagesText: pages.length > 1 ? `pages ${pages[0]}–${pages[pages.length - 1]}` : `page ${pages[0]}`,
+		pdf,
+		first: pages[0],
+		scans: pages.map((p) => ({ page: p, src: `${base}/scans/${id}-${pad(p)}.webp` })),
+	};
+});
+const isNotes = sources.some((s) => s.lecture !== undefined);
+const scanCount = items.reduce((n, i) => n + i.scans.length, 0);
+const multi = items.length > 1;
+---
+
+<section class="qd-pagesrc not-content" aria-labelledby="qd-pagesrc-title" data-pagefind-ignore>
+	<div class="qd-pagesrc__head">
+		<h2 id="qd-pagesrc-title" class="qd-pagesrc__title">Source</h2>
+		{
+			exercisesLink && (
+				<a class="qd-pagesrc__ex" href={`${base}${exercisesLink}`}>
+					Exercises on this topic
+					<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6" /></svg>
+				</a>
+			)
+		}
+	</div>
+	<p class="qd-pagesrc__lead">
+		{
+			isNotes
+				? polished
+					? 'Based on the handwritten lecture notes, with the wording edited for readability.'
+					: 'Transcribed from the handwritten lecture notes.'
+				: 'Taken from the exercise sheets of the course.'
+		}
+	</p>
+	<ul class="qd-pagesrc__list">
+		{
+			items.map((i) => (
+				<li>
+					<span class="qd-pagesrc__name">
+						<strong>{i.name}</strong>, {i.pagesText}
+					</span>
+					<span class="qd-pagesrc__links">
+						<a href={`${i.pdf}#page=${i.first}`} target="_blank" rel="noopener">
+							Open PDF
+						</a>
+						<a href={i.pdf} download>
+							Download
+						</a>
+					</span>
+				</li>
+			))
+		}
+	</ul>
+	<details class="qd-pagesrc__scans">
+		<summary>Show the original page{scanCount > 1 ? 's' : ''} ({scanCount})</summary>
+		<div class="qd-scans">
+			{
+				items.flatMap((i) =>
+					i.scans.map((s) => (
+						<a class="qd-scan" href={s.src} target="_blank" rel="noopener" title="Open the scan in full size">
+							<img src={s.src} alt={`${i.name}, page ${s.page}`} loading="lazy" decoding="async" />
+							<span class="qd-scan__label">{multi ? `${i.short} · p. ${s.page}` : `p. ${s.page}`}</span>
+						</a>
+					))
+				)
+			}
+		</div>
+	</details>
+</section>

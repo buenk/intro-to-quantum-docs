@@ -1,16 +1,15 @@
 ---
 title: "Exercises: Mixed states and graphical notation"
 description: "Exercises on density matrices, quantum operations, graphical notation and circuit simulation."
+sources: [{"sheet":13,"pages":"1-6"}]
 ---
-::pagesources{label="Exercise sheets:" items="E13:1-6"}
-
 ## Density matrices and mixed states
 
 ::pagesources{label="Notes:" notes="/notes/density-matrices/"}
 
 ### Quantum one-time pad
 
-::source{sheet="13" exercise="1" pages="1"}
+::extag{sheet="13" exercise="1"}
 
 Let $\vec r = (x, y, z) \in \mathbb{R}^3$ be an arbitrary point inside the Bloch ball (i.e., a vector of norm at most one: $x^2 + y^2 + z^2 \le 1$). You will show in Homework 3 that the density matrix describing the (mixed) state corresponding to $\vec r$ is given by
 
@@ -59,19 +58,15 @@ where $I = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$, $X = \begin{pmatrix} 0
 
 ### Dictionary
 
-::source{sheet="13" pages="2"}
-
 ![Dictionary of the graphical notation: boxes for matrices A, kets, products, tensor products, identity wire, transpose by looping the wire around the box, bra as flipped ket, trace by connecting output to input, the maximally entangled state as a cup, its bra as a cap, SWAP as crossing wires, and vec(M) as a box on a cup, equal by sliding to M transposed on the other wire](../../../assets/figures/E13-p02-1.png "w=577")
 
 ### Elephant eaten by a snake
-
-::source{sheet="13" pages="2"}
 
 ![Drawing of an elephant eaten by a snake (boa constrictor)](../../../assets/figures/E13-p02-2.png "w=334")
 
 ### Snake basics
 
-::source{sheet="13" exercise="2" pages="3"}
+::extag{sheet="13" exercise="2"}
 
 Recall that $\ket{\Phi}_{AB} := \sum_{i=1}^d \ket{i}_A \otimes \ket{i}_B$ corresponds to a snake looking back across its shoulder. Based on hints generously provided by Antoine de Saint-Exupéry, use graphical notation to show the following identities:
 
@@ -122,7 +117,7 @@ Recall that $\ket{\Phi}_{AB} := \sum_{i=1}^d \ket{i}_A \otimes \ket{i}_B$ corres
 
 ### Advanced snakes
 
-::source{sheet="13" exercise="3" pages="4"}
+::extag{sheet="13" exercise="3"}
 
 Recall that
 
@@ -186,7 +181,7 @@ corresponds to a hippopotamus in a pink tutu doing a grand plié[^E13-2] (also k
 
 ### Snakes and vectorization
 
-::source{sheet="13" exercise="4" pages="5"}
+::extag{sheet="13" exercise="4"}
 
 Recall that $\operatorname{vec}(M) := (M_A \otimes I_B)\ket{\Phi}_{AB}$. Use graphical notation to show the following identities:
 
@@ -218,7 +213,7 @@ Recall that $\operatorname{vec}(M) := (M_A \otimes I_B)\ket{\Phi}_{AB}$. Use gra
 
 ### Teleportation from snakes
 
-::source{sheet="13" exercise="5" pages="5-6"}
+::extag{sheet="13" exercise="5"}
 
 Recall that the Pauli $X$ and $Z$ matrices are
 
@@ -267,7 +262,7 @@ where $\ket{\Phi} = \ket{00} + \ket{11} = \operatorname{vec}(I)$ is the non-norm
 
 ### Quantum software
 
-::source{sheet="13" exercise="6" pages="6"}
+::extag{sheet="13" exercise="6"}
 
 Alice has invented a new quantum algorithm and implemented it on her quantum computer. Her algorithm is described by some $d \times d$ unitary $U$. Alice decides to sell it to make some money, so she opens a quantum software factory that produces the maximally entangled state $\frac{1}{\sqrt d}\ket{\Phi}_{AA'}$ with $U$ applied on the first register. This state effectively encodes the unitary $U_A$ since it is equal to
 

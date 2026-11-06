@@ -1,16 +1,15 @@
 ---
 title: "Exercises: Linear algebra"
 description: "Exercises on matrices, Dirac notation, eigenvalues and the tensor product."
+sources: [{"sheet":2,"pages":"1-2"}]
 ---
-::pagesources{label="Exercise sheets:" items="E02:1-2"}
-
 ## Matrices and vectors
 
 ::pagesources{label="Notes:" notes="/notes/matrices-and-vectors/"}
 
 ### Properties of matrix multiplication
 
-::source{sheet="2" exercise="3" pages="1"}
+::extag{sheet="2" exercise="3"}
 
 The goal of this exercise is to verify some basic properties of matrix multiplication.
 
@@ -36,7 +35,7 @@ The goal of this exercise is to verify some basic properties of matrix multiplic
 
 ### Bra-ket notation
 
-::source{sheet="2" exercise="1" pages="1"}
+::extag{sheet="2" exercise="1"}
 
 Let $A$ be an $n \times n$ matrix given in the computational basis and let $\bra{i}$ denote the $i$-th standard basis row vector and $\ket{j}$ denote the $j$-th standard basis column vector. Show that
 
@@ -51,7 +50,7 @@ Let $A = \sum_{k=1}^n \ket{\psi_k}\bra{k}$, for some vectors $\ket{\psi_k} \in \
 
 ### Properties of the inner product
 
-::source{sheet="2" exercise="2" pages="1"}
+::extag{sheet="2" exercise="2"}
 
 Verify that the inner product $\braket{u|v}$ on $\mathbb{C}^n$ satisfies the following two properties:
 
@@ -64,7 +63,7 @@ Verify that the inner product $\braket{u|v}$ on $\mathbb{C}^n$ satisfies the fol
 
 ### Types of matrices
 
-::source{sheet="2" exercise="4" pages="2"}
+::extag{sheet="2" exercise="4"}
 
 Consider the following five matrices:
 
@@ -82,7 +81,7 @@ Match them with the five points in this diagram:
 
 ### Diagonalizing Y
 
-::source{sheet="2" exercise="5" pages="2"}
+::extag{sheet="2" exercise="5"}
 
 The goal of this exercise is to diagonalize $Y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}$.
 
@@ -92,7 +91,7 @@ The goal of this exercise is to diagonalize $Y = \begin{pmatrix} 0 & -i \\ i & 0
 
 ### Eigenvalues, eigenvectors, and diagonalisation
 
-::source{sheet="2" exercise="6" pages="2"}
+::extag{sheet="2" exercise="6"}
 
 Let $A \in \mathrm{M}_{n,n}(\mathbb{C})$ be a normal matrix and $A = \sum_k \lambda_k\ketbra{v_k}{v_k}$ be its diagonal form (also known as "spectral decomposition" of $A$). Recall that here $\lambda_k$ are the eigenvalues of $A$ and $\ket{v_k}$ are the eigenvectors of $A$, and that the eigenvectors are orthonormal: $\braket{v_i|v_j} = \delta_{ij}$.
 
@@ -107,6 +106,6 @@ Let $A \in \mathrm{M}_{n,n}(\mathbb{C})$ be a normal matrix and $A = \sum_k \lam
 
 ### Tensor product
 
-::source{sheet="2" exercise="7" pages="2"}
+::extag{sheet="2" exercise="7"}
 
 Let $I = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ and $M = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$. Compute explicitly the $4 \times 4$ matrices $I \otimes M$ and $M \otimes I$.

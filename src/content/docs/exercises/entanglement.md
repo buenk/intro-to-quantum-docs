@@ -1,16 +1,15 @@
 ---
 title: "Exercises: Entanglement and communication"
 description: "Exercises on bell states, superdense coding, teleportation, non-local games and observables."
+sources: [{"sheet":7,"pages":"1-2"},{"sheet":8,"pages":"1-2"}]
 ---
-::pagesources{label="Exercise sheets:" items="E07:1-2;E08:1-2"}
-
 ## Bell states and superdense coding
 
 ::pagesources{label="Notes:" notes="/notes/superdense-coding/"}
 
 ### Pauli matrices and Bell states
 
-::source{sheet="7" exercise="1" pages="1"}
+::extag{sheet="7" exercise="1"}
 
 Recall from the lecture notes that the four Pauli matrices are:
 
@@ -41,7 +40,7 @@ $$
 
 ### Local conversion of Bell states
 
-::source{sheet="7" exercise="2" pages="1"}
+::extag{sheet="7" exercise="2"}
 
 Verify that any Bell state can be converted to any other by applying some combination of Pauli $X$ and $Z$ matrices to one of the qubits.
 
@@ -65,7 +64,7 @@ Verify that any Bell state can be converted to any other by applying some combin
 
 ### Cirq: Superdense coding
 
-::source{sheet="7" exercise="3" pages="1"}
+::extag{sheet="7" exercise="3"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -73,7 +72,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### H ⊗ H on Bell states
 
-::source{sheet="8" exercise="4" pages="2"}
+::extag{sheet="8" exercise="4"}
 
 Verify that
 
@@ -91,7 +90,7 @@ for all $z, x \in \{0,1\}$, where $\ket{\beta_{zx}}$ are the Bell states.
 
 ### SWAP and the Pauli matrices
 
-::source{sheet="7" exercise="4" pages="2"}
+::extag{sheet="7" exercise="4"}
 
 Recall that the SWAP operation is defined on the computational basis states as follows:
 
@@ -115,7 +114,7 @@ for all $a, b \in \{0,1\}$.
 
 ### Teleportation identity
 
-::source{sheet="7" exercise="5" pages="2"}
+::extag{sheet="7" exercise="5"}
 
 The goal of this exercise is to explicitly verify the teleportation identity
 
@@ -133,7 +132,7 @@ Let $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ be an arbitrary single-qubit sta
 
 ### Cirq: Teleportation
 
-::source{sheet="7" exercise="6" pages="2"}
+::extag{sheet="7" exercise="6"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -145,7 +144,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Quantum correlations
 
-::source{sheet="8" exercise="1" pages="1"}
+::extag{sheet="8" exercise="1"}
 
 Let $U = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$ be an arbitrary unitary operation.
 
@@ -169,7 +168,7 @@ Let $U = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$ be an arbitrary unitary o
 
 ### Measuring two probabilistic bits
 
-::source{sheet="8" exercise="2" pages="1"}
+::extag{sheet="8" exercise="2"}
 
 Let
 
@@ -187,7 +186,7 @@ be an arbitrary state on two probabilistic bits, where Alice holds the first bit
 
 ### Alice tries to signal to Bob
 
-::source{sheet="8" exercise="3" pages="2"}
+::extag{sheet="8" exercise="3"}
 
 Let $\ket{\psi} \in \C^4$ be an arbitrary two-qubit state shared by Alice and Bob. Assume that Alice tries to influence Bob's measurement outcomes by applying a unitary operation $U$ on her qubit.
 
@@ -197,7 +196,7 @@ Let $\ket{\psi} \in \C^4$ be an arbitrary two-qubit state shared by Alice and Bo
 
 ### CHSH game
 
-::source{sheet="8" exercise="5" pages="2"}
+::extag{sheet="8" exercise="5"}
 
 The goal of this exercise is to verify the quantum strategy for the CHSH game.
 
@@ -237,7 +236,7 @@ The goal of this exercise is to verify the quantum strategy for the CHSH game.
 
 ### Cirq: Construction of the GHZ-state
 
-::source{sheet="8" exercise="6" pages="2"}
+::extag{sheet="8" exercise="6"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -245,7 +244,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Cirq: Quantum square game
 
-::source{sheet="8" exercise="7" pages="2"}
+::extag{sheet="8" exercise="7"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).

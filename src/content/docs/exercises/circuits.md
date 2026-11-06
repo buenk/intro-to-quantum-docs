@@ -1,16 +1,15 @@
 ---
 title: "Exercises: Quantum circuits"
 description: "Exercises on gates, circuits, reversible computation, oracles and compiling."
+sources: [{"sheet":4,"pages":"1-3"},{"sheet":5,"pages":"1-2"},{"sheet":9,"pages":"2-4"}]
 ---
-::pagesources{label="Exercise sheets:" items="E04:1-3;E05:1-2;E09:2-4"}
-
 ## Quantum gates
 
 ::pagesources{label="Notes:" notes="/notes/quantum-gates/"}
 
 ### The quantum SWAP gate
 
-::source{sheet="4" exercise="1" pages="1"}
+::extag{sheet="4" exercise="1"}
 
 The two-qubit SWAP gate is defined on the standard basis states as follows:
 
@@ -32,7 +31,7 @@ for all $a,b \in \{0,1\}$, where $\ket{a,b}$ is a shorthand for $\ket{a}\otimes\
 
 ### Controlled-NOT gate
 
-::source{sheet="4" exercise="2" pages="1-2"}
+::extag{sheet="4" exercise="2"}
 
 The controlled-NOT gate, denoted CNOT, is a 2-qubit gate that flips the state of the second (target) qubit if the first (control) qubit is in the state $\ket{1}$. Its definition on the standard basis states and its graphical notation are as follows:
 
@@ -71,7 +70,7 @@ where $x,y \in \{0,1\}$. The goal of this exercise is for you to understand how 
 
 ### Understanding the upside-down CNOT inside-out
 
-::source{sheet="4" exercise="3" pages="2"}
+::extag{sheet="4" exercise="3"}
 
 The goal of this exercise is to derive the matrix representation for the upside-down CNOT gate
 
@@ -95,7 +94,7 @@ in three different ways.
 
 ### Exercise 4.4
 
-::source{sheet="4" exercise="4" pages="3"}
+::extag{sheet="4" exercise="4"}
 
 Verify the following circuit identity:
 
@@ -111,7 +110,7 @@ X := X XOR Y;
 
 ### Toffoli gate
 
-::source{sheet="4" exercise="5" pages="3"}
+::extag{sheet="4" exercise="5"}
 
 The Toffoli gate is a three-qubit gate defined on the computational basis states as follows:
 
@@ -126,13 +125,13 @@ for all $x_1,x_2,y \in \{0,1\}$.
 
 ### Hadamarding the CNOT gate
 
-::source{sheet="5" exercise="1" pages="1"}
+::extag{sheet="5" exercise="1"}
 
 Write down the quantum circuit for the operation $(H \otimes H)\,\mathrm{CNOT}\,(H \otimes H)$. Compute its matrix representation. What gate does this operation amount to?
 
 ### Funny Toffoli gate
 
-::source{sheet="5" exercise="2" pages="1"}
+::extag{sheet="5" exercise="2"}
 
 Write down the explicit matrix for Toffoli gate that is applied in the following way:
 
@@ -142,7 +141,7 @@ Here the second qubit is the target and the first and third qubits are the contr
 
 ### Cirq: Implementing SWAP
 
-::source{sheet="5" exercise="4" pages="2"}
+::extag{sheet="5" exercise="4"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -154,7 +153,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Oracles
 
-::source{sheet="5" exercise="3" pages="1-2"}
+::extag{sheet="5" exercise="3"}
 
 Let $\mathrm{EQ} : \{0,1\}^2 \to \{0,1\}$ be the equality function on two bits:
 
@@ -174,7 +173,7 @@ $$
 
 ### Cirq: OR-circuit on two qubits
 
-::source{sheet="5" exercise="7" pages="2"}
+::extag{sheet="5" exercise="7"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -182,7 +181,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Cirq: OR-circuit on three qubits
 
-::source{sheet="5" exercise="8" pages="2"}
+::extag{sheet="5" exercise="8"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -194,7 +193,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Pauli rotations
 
-::source{sheet="9" exercise="3" pages="2-3"}
+::extag{sheet="9" exercise="3"}
 
 The goal of this exercise is to understand how Pauli matrices are related to various qubit rotation operations.
 
@@ -260,7 +259,7 @@ The goal of this exercise is to understand how Pauli matrices are related to var
 
 ### ZYZ, ABC, and controlled-U
 
-::source{sheet="9" exercise="4" pages="3-4"}
+::extag{sheet="9" exercise="4"}
 
 This exercise has two goals: first, we would like to decompose a general single-qubit operation $U$ as a sequence of Pauli rotations from eq. (3); second, we would like to implement the controlled-$U$ operation on two qubits using only CNOT and arbitrary single-qubit gates.
 
@@ -296,7 +295,7 @@ for some angles $\varphi, \alpha, \gamma, \theta \in \mathbb{R}$.
    \end{aligned}
    $$
 
-::pagebreak{sheet="9" page="4"}
+   ::pagebreak{sheet="9" page="4"}
 
    Verify that
 
@@ -318,7 +317,7 @@ for some angles $\varphi, \alpha, \gamma, \theta \in \mathbb{R}$.
 
 ### Cirq: Implementation of two-level unitaries
 
-::source{sheet="9" exercise="5" pages="4"}
+::extag{sheet="9" exercise="5"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -326,7 +325,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Cirq: ABC & ZYZ decomposition
 
-::source{sheet="9" exercise="8" pages="4"}
+::extag{sheet="9" exercise="8"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).

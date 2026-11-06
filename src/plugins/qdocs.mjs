@@ -4,10 +4,12 @@
 //   :::definition[Optional title]  :::theorem[Lemma]  :::example  :::proof  :::exercise
 //
 // Leaf directives:
-//   ::source{lecture="3" pages="2-4"}                 section provenance (lecture notes)
-//   ::source{sheet="4" exercise="2" pages="1-2"}      provenance (exercise sheets)
+//   ::extag{sheet="4" exercise="2"}                   "Exercise sheet 4 · Exercise 2" label
 //   ::pagebreak{lecture="3" page="5"}                 where a handwritten page starts
-//   ::pagesources{items="L03:1-4;L04:2" exercises="/exercises/x/" notes="/notes/y/"}
+//   ::pagesources{label="Notes:" notes="/notes/y/"}   link chips (items="L03:1-4;…" adds PDF chips)
+//
+// Page-level sources (lecture/sheet, PDFs, scans) are not Markdown: they come from the page's
+// `sources` frontmatter and are rendered at the bottom of the page by src/components/Footer.astro.
 //
 // Paragraphs that only contain images become <figure class="note-figure">.
 // A rehype plugin prefixes the deploy `base` to root-relative links/images.
@@ -36,12 +38,6 @@ function parsePages(spec) {
 	}
 	return out;
 }
-
-const fmtPages = (pages) => {
-	if (!pages.length) return '';
-	if (pages.length === 1) return `page ${pages[0]}`;
-	return `pages ${pages[0]}–${pages[pages.length - 1]}`;
-};
 
 const icon = (name) => {
 	const paths = {
@@ -77,62 +73,11 @@ function withBase(base, path) {
 	return `${b}${path}`;
 }
 
-function sourceInfo(attrs, base) {
-	const pages = parsePages(attrs.pages);
-	if (attrs.lecture) {
-		const id = `L${pad(attrs.lecture)}`;
-		return {
-			kind: 'notes',
-			id,
-			pages,
-			label: [h('strong', `Lecture ${Number(attrs.lecture)}`), pages.length ? `, ${fmtPages(pages)}` : ''],
-			pdf: withBase(base, `/pdfs/lectures/${id}.pdf`),
-			scanAlt: (p) => `Lecture ${Number(attrs.lecture)}, handwritten page ${p}`,
-		};
-	}
-	const id = `E${pad(attrs.sheet)}`;
-	return {
-		kind: 'sheet',
-		id,
-		pages,
-		label: [
-			h('strong', `Exercise sheet ${Number(attrs.sheet)}`),
-			attrs.exercise ? `, Exercise ${attrs.exercise}` : '',
-		],
-		pdf: withBase(base, `/pdfs/exercises/${id}.pdf`),
-		scanAlt: (p) => `Exercise sheet ${Number(attrs.sheet)}, page ${p}`,
-	};
-}
-
-function renderSource(attrs, base) {
-	const s = sourceInfo(attrs, base);
-	const first = s.pages[0] ?? 1;
-	const scans = s.pages.map((p) => {
-		const src = withBase(base, `/scans/${s.id}-${pad(p)}.webp`);
-		return h('a', { href: src, target: '_blank', rel: 'noopener', className: ['qd-scan'], title: 'Open the scan in full size' }, [
-			h('img', { src, alt: s.scanAlt(p), loading: 'lazy', decoding: 'async' }),
-			h('span', { className: ['qd-scan__label'] }, `p. ${p}`),
-		]);
-	});
-	const what = s.kind === 'notes' ? 'handwritten page' : 'sheet page';
-	const row = [
-		h('span', { className: ['qd-source__label'] }, [icon(s.kind === 'notes' ? 'notes' : 'sheet'), h('span', ['Source: ', ...s.label])]),
-		h('span', { className: ['qd-source__links'] }, [
-			h('a', { href: `${s.pdf}#page=${first}`, target: '_blank', rel: 'noopener', title: 'Open the original PDF at this page' }, [icon('external'), 'PDF']),
-			h('a', { href: s.pdf, download: '', title: 'Download the original PDF' }, [icon('download'), 'Download']),
-		]),
-	];
-	if (!scans.length) return h('div', { className: ['qd-source', 'not-content', `qd-source--${s.kind}`], dataPagefindIgnore: '' }, [h('div', { className: ['qd-source__row'] }, row)]);
-	return h('details', { className: ['qd-source', 'not-content', `qd-source--${s.kind}`], dataPagefindIgnore: '' }, [
-		h('summary', { className: ['qd-source__row'] }, [
-			...row,
-			h('span', { className: ['qd-source__toggle'], title: `Show the original ${what}${scans.length > 1 ? 's' : ''}` }, [
-				icon('scan'),
-				h('span', { className: ['qd-source__toggle-text'] }, scans.length > 1 ? `Original pages` : `Original page`),
-				h('span', { className: ['qd-source__chev'], ariaHidden: 'true' }),
-			]),
-		]),
-		h('div', { className: ['qd-scans'] }, scans),
+/** Small label under an exercise heading: which sheet and exercise it is. */
+function renderExtag(attrs) {
+	return h('p', { className: ['qd-extag', 'not-content'], dataPagefindIgnore: '' }, [
+		`Exercise sheet ${Number(attrs.sheet)}`,
+		attrs.exercise ? ` · Exercise ${attrs.exercise}` : '',
 	]);
 }
 
@@ -215,8 +160,8 @@ export function remarkQdocs(options = {}) {
 				];
 				return;
 			}
-			if (node.type === 'leafDirective' && node.name === 'source') {
-				applyHast(node, renderSource(node.attributes || {}, base));
+			if (node.type === 'leafDirective' && node.name === 'extag') {
+				applyHast(node, renderExtag(node.attributes || {}));
 				return SKIP;
 			}
 			if (node.type === 'leafDirective' && node.name === 'pagebreak') {

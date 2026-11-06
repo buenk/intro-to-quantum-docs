@@ -33,20 +33,20 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Probabilistic bits, complex numbers and qubits*
 
-::source{lecture="1" pages="1-14"}
+[Open the PDF](/pdfs/lectures/L01.pdf) · 14 pages
 
 - Opening remarks <small>(p. 1)</small> → [About the course](/notes/introduction/)
 - Main directions <small>(p. 1)</small> → [About the course](/notes/introduction/#main-directions)
 - Motivation <small>(p. 1)</small> → [About the course](/notes/introduction/#motivation)
-- Probabilistic bits (closest thing to quantum bits) <small>(p. 2)</small> → [Probabilistic bits](/notes/probabilistic-bits/#probabilistic-bits-closest-thing-to-quantum-bits)
-- Probabilistic information is information too ! <small>(p. 3)</small> → [Probabilistic bits](/notes/probabilistic-bits/#probabilistic-information-is-information-too-)
+- Probabilistic bits (closest thing to quantum bits) <small>(p. 2)</small> → [Probabilistic bits](/notes/probabilistic-bits/)
+- Probabilistic information is information too ! <small>(p. 3)</small> → [Probabilistic bits](/notes/probabilistic-bits/)
 - Operations on probabilistic bits <small>(p. 4)</small> → [Probabilistic bits](/notes/probabilistic-bits/#operations-on-probabilistic-bits)
 - Adding and multiplying probabilities <small>(p. 5)</small> → [Probabilistic bits](/notes/probabilistic-bits/#adding-and-multiplying-probabilities)
 - Measuring a probabilistic bit <small>(p. 6)</small> → [Probabilistic bits](/notes/probabilistic-bits/#measuring-a-probabilistic-bit)
-- Complex numbers <small>(p. 7)</small> → [Complex numbers](/notes/complex-numbers/#complex-numbers)
+- Complex numbers <small>(p. 7)</small> → [Complex numbers](/notes/complex-numbers/)
 - Geometry of ℂ <small>(p. 8)</small> → [Complex numbers](/notes/complex-numbers/#geometry-of-ℂ)
 - Arithmetic of ℂ <small>(p. 8)</small> → [Complex numbers](/notes/complex-numbers/#arithmetic-of-ℂ)
-- Quantum bits (qubits) <small>(p. 9)</small> → [Qubits and the Bloch sphere](/notes/qubits/#quantum-bits-qubits)
+- Quantum bits (qubits) <small>(p. 9)</small> → [Qubits and the Bloch sphere](/notes/qubits/)
 - Qubit states <small>(p. 9)</small> → [Qubits and the Bloch sphere](/notes/qubits/#qubit-states)
 - Measuring a qubit <small>(p. 10)</small> → [Qubits and the Bloch sphere](/notes/qubits/#measuring-a-qubit)
 - Quantum NOT <small>(p. 10)</small> → [Qubits and the Bloch sphere](/notes/qubits/#quantum-not)
@@ -59,7 +59,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Linear algebra*
 
-::source{lecture="2" pages="1-13"}
+[Open the PDF](/pdfs/lectures/L02.pdf) · 13 pages
 
 - Opening remarks <small>(p. 1)</small> → [Matrices and vectors](/notes/matrices-and-vectors/)
 - Matrices <small>(p. 1)</small> → [Matrices and vectors](/notes/matrices-and-vectors/#matrices)
@@ -83,7 +83,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *The postulates of quantum mechanics*
 
-::source{lecture="3" pages="1-12"}
+[Open the PDF](/pdfs/lectures/L03.pdf) · 12 pages
 
 - Opening remarks <small>(p. 1)</small> → [The postulates of quantum mechanics](/notes/postulates/)
 - Probabilistic bits: rules of the game <small>(p. 2)</small> → [The postulates of quantum mechanics](/notes/postulates/#probabilistic-bits-rules-of-the-game)
@@ -102,7 +102,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Quantum gates, circuits and algorithms*
 
-::source{lecture="4" pages="1-7"}
+[Open the PDF](/pdfs/lectures/L04.pdf) · 7 pages
 
 - Opening remarks <small>(p. 1)</small> → [Quantum gates](/notes/quantum-gates/#logical-gates)
 - Single-qubit gates <small>(p. 2)</small> → [Quantum gates](/notes/quantum-gates/#single-qubit-gates)
@@ -117,7 +117,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Reversible computation, oracles and Deutsch's algorithm*
 
-::source{lecture="5" pages="1-9"}
+[Open the PDF](/pdfs/lectures/L05.pdf) · 9 pages
 
 - Opening remarks <small>(p. 1)</small> → [Reversible computation and oracles](/notes/reversible-computation/)
 - Quantum AND? <small>(p. 1)</small> → [Reversible computation and oracles](/notes/reversible-computation/#quantum-and)
@@ -135,7 +135,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Deutsch–Jozsa, Bernstein–Vazirani and Simon*
 
-::source{lecture="6" pages="1-8"}
+[Open the PDF](/pdfs/lectures/L06.pdf) · 8 pages
 
 - Opening remarks <small>(p. 1)</small> → [Deutsch–Jozsa and Bernstein–Vazirani](/notes/deutsch-jozsa-bernstein-vazirani/)
 - Hadamard transform <small>(p. 1–2)</small> → [Deutsch–Jozsa and Bernstein–Vazirani](/notes/deutsch-jozsa-bernstein-vazirani/#hadamard-transform)
@@ -149,7 +149,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Quantum communication: superdense coding and teleportation*
 
-::source{lecture="7" pages="1-7"}
+[Open the PDF](/pdfs/lectures/L07.pdf) · 7 pages
 
 - Opening remarks <small>(p. 1)</small> → [Bell states and superdense coding](/notes/superdense-coding/)
 - One-time pad <small>(p. 2)</small> → [Bell states and superdense coding](/notes/superdense-coding/#one-time-pad)
@@ -163,7 +163,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Non-locality and entanglement: GHZ and CHSH games*
 
-::source{lecture="8" pages="1-11"}
+[Open the PDF](/pdfs/lectures/L08.pdf) · 11 pages
 
 - Quantum non-locality and entanglement <small>(p. 1)</small> → [Non-locality: GHZ and CHSH games](/notes/non-local-games/#quantum-non-locality-and-entanglement)
 - Quantum correlations <small>(p. 2–3)</small> → [Non-locality: GHZ and CHSH games](/notes/non-local-games/#quantum-correlations)
@@ -177,7 +177,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Grover's algorithm and quantum compiling*
 
-::source{lecture="9" pages="1-12"}
+[Open the PDF](/pdfs/lectures/L09.pdf) · 12 pages
 
 - Opening remarks <small>(p. 1–2)</small> → [Grover's algorithm](/notes/grover/#the-search-problem)
 - Grover's algorithm <small>(p. 2)</small> → [Grover's algorithm](/notes/grover/#grovers-algorithm)
@@ -193,7 +193,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Phase estimation and the quantum Fourier transform*
 
-::source{lecture="10" pages="1-7"}
+[Open the PDF](/pdfs/lectures/L10.pdf) · 7 pages
 
 - Opening remarks <small>(p. 1–2)</small> → [Quantum phase estimation](/notes/phase-estimation/)
 - Quantum phase estimation <small>(p. 3–5)</small> → [Quantum phase estimation](/notes/phase-estimation/#quantum-phase-estimation)
@@ -204,7 +204,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Order finding, period finding and factoring*
 
-::source{lecture="11" pages="1-11"}
+[Open the PDF](/pdfs/lectures/L11.pdf) · 11 pages
 
 - Opening remarks <small>(p. 1)</small> → [Number theory toolkit](/notes/number-theory/)
 - Extended Euclidean algorithm <small>(p. 1–2)</small> → [Number theory toolkit](/notes/number-theory/#extended-euclidean-algorithm)
@@ -220,7 +220,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Quantum error correction*
 
-::source{lecture="12" pages="1-16"}
+[Open the PDF](/pdfs/lectures/L12.pdf) · 16 pages
 
 - Opening remarks <small>(p. 1)</small> → [Error correction for bits](/notes/classical-error-correction/)
 - Classical repetition code <small>(p. 1)</small> → [Error correction for bits](/notes/classical-error-correction/#classical-repetition-code)
@@ -235,7 +235,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 *Mixed states and graphical notation*
 
-::source{lecture="13" pages="1-17"}
+[Open the PDF](/pdfs/lectures/L13.pdf) · 17 pages
 
 - Opening remarks <small>(p. 1)</small> → [Density matrices and mixed states](/notes/density-matrices/)
 - Density matrix <small>(p. 1)</small> → [Density matrices and mixed states](/notes/density-matrices/#density-matrix)
@@ -256,7 +256,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 1
 
-::source{sheet="1" pages="1-2"}
+[Open the PDF](/pdfs/exercises/E01.pdf) · 2 pages
 
 - Exercise 1 (Random operation) → [Foundations](/exercises/foundations/#random-operation)
 - Exercise 2 (Guessing the coin) → [Foundations](/exercises/foundations/#guessing-the-coin)
@@ -270,7 +270,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 2
 
-::source{sheet="2" pages="1-2"}
+[Open the PDF](/pdfs/exercises/E02.pdf) · 2 pages
 
 - Exercise 1 (Bra-ket notation) → [Linear algebra](/exercises/linear-algebra/#bra-ket-notation)
 - Exercise 2 (Properties of the inner product) → [Linear algebra](/exercises/linear-algebra/#properties-of-the-inner-product)
@@ -282,7 +282,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 3
 
-::source{sheet="3" pages="1-2"}
+[Open the PDF](/pdfs/exercises/E03.pdf) · 2 pages
 
 - Exercise 1 (Unitary transformations and orthonormal bases) → [Quantum mechanics](/exercises/postulates/#unitary-transformations-and-orthonormal-bases)
 - Exercise 2 (Simulating a measurement in another basis) → [Quantum mechanics](/exercises/postulates/#simulating-a-measurement-in-another-basis)
@@ -293,7 +293,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 4
 
-::source{sheet="4" pages="1-3"}
+[Open the PDF](/pdfs/exercises/E04.pdf) · 3 pages
 
 - Exercise 1 (The quantum SWAP gate) → [Quantum circuits](/exercises/circuits/#the-quantum-swap-gate)
 - Exercise 2 (Controlled-NOT gate) → [Quantum circuits](/exercises/circuits/#controlled-not-gate)
@@ -303,7 +303,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 5
 
-::source{sheet="5" pages="1-2"}
+[Open the PDF](/pdfs/exercises/E05.pdf) · 2 pages
 
 - Exercise 1 (Hadamarding the CNOT gate) → [Quantum circuits](/exercises/circuits/#hadamarding-the-cnot-gate)
 - Exercise 2 (Funny Toffoli gate) → [Quantum circuits](/exercises/circuits/#funny-toffoli-gate)
@@ -316,7 +316,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 6
 
-::source{sheet="6" pages="1-1"}
+[Open the PDF](/pdfs/exercises/E06.pdf) · 1 page
 
 - Exercise 1 (Hadamard transform) → [Quantum algorithms](/exercises/algorithms/#hadamard-transform)
 - Exercise 2 (Deterministic algorithm for Bernstein–Vazirani) → [Quantum algorithms](/exercises/algorithms/#deterministic-algorithm-for-bernsteinvazirani)
@@ -327,7 +327,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 7
 
-::source{sheet="7" pages="1-2"}
+[Open the PDF](/pdfs/exercises/E07.pdf) · 2 pages
 
 - Exercise 1 (Pauli matrices and Bell states) → [Entanglement and communication](/exercises/entanglement/#pauli-matrices-and-bell-states)
 - Exercise 2 (Local conversion of Bell states) → [Entanglement and communication](/exercises/entanglement/#local-conversion-of-bell-states)
@@ -338,7 +338,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 8
 
-::source{sheet="8" pages="1-2"}
+[Open the PDF](/pdfs/exercises/E08.pdf) · 2 pages
 
 - Exercise 1 (Quantum correlations) → [Entanglement and communication](/exercises/entanglement/#quantum-correlations)
 - Exercise 2 (Measuring two probabilistic bits) → [Entanglement and communication](/exercises/entanglement/#measuring-two-probabilistic-bits)
@@ -350,7 +350,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 9
 
-::source{sheet="9" pages="1-4"}
+[Open the PDF](/pdfs/exercises/E09.pdf) · 4 pages
 
 - Exercise 1 (Two reflections make a rotation) → [Quantum algorithms](/exercises/algorithms/#two-reflections-make-a-rotation)
 - Exercise 2 (Cirq: One-out-of-four search) → [Quantum algorithms](/exercises/algorithms/#cirq-one-out-of-four-search)
@@ -363,7 +363,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 10
 
-::source{sheet="10" pages="1-2"}
+[Open the PDF](/pdfs/exercises/E10.pdf) · 2 pages
 
 - Exercise 1 (QFT on 1 and 2 qubits) → [Fourier transform and Shor's algorithm](/exercises/shor/#qft-on-1-and-2-qubits)
 - Exercise 2 (Quantum circuit for QFT on 2 qubits) → [Fourier transform and Shor's algorithm](/exercises/shor/#quantum-circuit-for-qft-on-2-qubits)
@@ -373,7 +373,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 11
 
-::source{sheet="11" pages="1-2"}
+[Open the PDF](/pdfs/exercises/E11.pdf) · 2 pages
 
 - Exercise 1 (Euclidean algorithm) → [Fourier transform and Shor's algorithm](/exercises/shor/#euclidean-algorithm)
 - Exercise 2 (Multiplicative inverse and order) → [Fourier transform and Shor's algorithm](/exercises/shor/#multiplicative-inverse-and-order)
@@ -384,7 +384,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 12
 
-::source{sheet="12" pages="1-3"}
+[Open the PDF](/pdfs/exercises/E12.pdf) · 3 pages
 
 - Exercise 1 (CNOT gymnastics) → [Error correction](/exercises/error-correction/#cnot-gymnastics)
 - Exercise 2 (Propagation of Pauli errors) → [Error correction](/exercises/error-correction/#propagation-of-pauli-errors)
@@ -395,7 +395,7 @@ The site is organised by topic. To follow the course lecture by lecture, use the
 
 ### Exercise sheet 13
 
-::source{sheet="13" pages="1-6"}
+[Open the PDF](/pdfs/exercises/E13.pdf) · 6 pages
 
 - Exercise 1 (Quantum one-time pad) → [Mixed states and graphical notation](/exercises/mixed-states/#quantum-one-time-pad)
 - Dictionary → [Mixed states and graphical notation](/exercises/mixed-states/#dictionary)

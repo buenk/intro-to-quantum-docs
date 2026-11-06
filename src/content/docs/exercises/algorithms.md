@@ -1,16 +1,15 @@
 ---
 title: "Exercises: Quantum algorithms"
 description: "Exercises on deutsch, Deutsch–Jozsa, Bernstein–Vazirani, Simon and Grover."
+sources: [{"sheet":5,"pages":"2"},{"sheet":6,"pages":"1"},{"sheet":9,"pages":"1-4"}]
 ---
-::pagesources{label="Exercise sheets:" items="E05:2;E06:1;E09:1-4"}
-
 ## Deutsch's algorithm
 
 ::pagesources{label="Notes:" notes="/notes/deutsch/"}
 
 ### Cirq: Deutsch's algorithm with a phase oracle
 
-::source{sheet="5" exercise="5" pages="2"}
+::extag{sheet="5" exercise="5"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -18,7 +17,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Cirq: Deutsch's algorithm with a binary oracle
 
-::source{sheet="5" exercise="6" pages="2"}
+::extag{sheet="5" exercise="6"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -30,7 +29,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Hadamard transform
 
-::source{sheet="6" exercise="1" pages="1"}
+::extag{sheet="6" exercise="1"}
 
 Recall that $s \cdot x = \sum_{i=1}^n s_i x_i$ denotes the inner product of bit strings $s, x \in \{0,1\}^n$ modulo 2.
 
@@ -56,25 +55,25 @@ Recall that $s \cdot x = \sum_{i=1}^n s_i x_i$ denotes the inner product of bit 
 
 ### Deterministic algorithm for Bernstein–Vazirani
 
-::source{sheet="6" exercise="2" pages="1"}
+::extag{sheet="6" exercise="2"}
 
 Find a deterministic classical algorithm that solves the Bernstein–Vazirani problem with certainty by evaluating the function exactly $n$ times. In other words, find a collection of $n$ strings $x \in \{0,1\}^n$ such that evaluating the function $f(x) = s \cdot x$ on them uniquely determines $s$.
 
 ### Bernstein–Vazirani for an affine function
 
-::source{sheet="6" exercise="3" pages="1"}
+::extag{sheet="6" exercise="3"}
 
 Consider a slight extension of the Bernstein–Vazirani problem where the function $f$ within the oracle is affine rather than linear, i.e., $f(x) = s \cdot x + b$, for some unknown $s \in \{0,1\}^n$ and $b \in \{0,1\}$. Would the final measurement still return $s \in \{0,1\}^n$ correctly?
 
 ### All ones in Deutsch–Jozsa
 
-::source{sheet="6" exercise="4" pages="1"}
+::extag{sheet="6" exercise="4"}
 
 When deriving the Deutsch–Jozsa algorithm, we looked at the probability of getting all zeroes in the final measurement. Let's say we instead looked at the probability of getting all ones. Characterize those Boolean functions $f : \{0,1\}^n \to \{0,1\}$ for which the final measurement produces the outcome $z = 1^n = 11 \ldots 1$ with probability 1.
 
 ### Cirq: Bernstein–Vazirani
 
-::source{sheet="6" exercise="5" pages="1"}
+::extag{sheet="6" exercise="5"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -82,7 +81,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Cirq: Deutsch–Jozsa
 
-::source{sheet="6" exercise="6" pages="1"}
+::extag{sheet="6" exercise="6"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -94,7 +93,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Two reflections make a rotation
 
-::source{sheet="9" exercise="1" pages="1-2"}
+::extag{sheet="9" exercise="1"}
 
 The goal of this exercise is to verify that two consecutive reflections produce a rotation whose angle is twice the angle between the axes of the two reflections (recall that this observation is at the core of the analysis of Grover's algorithm). Just like in Grover's algorithm, in this exercise all amplitudes are real. That is, we only consider qubit states of the form
 
@@ -145,7 +144,7 @@ for some angle $\theta \in [0, 2\pi)$. You can visualize any such state as a uni
 
 ### Cirq: One-out-of-four search
 
-::source{sheet="9" exercise="2" pages="2"}
+::extag{sheet="9" exercise="2"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -153,7 +152,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Cirq: Iterative reflection
 
-::source{sheet="9" exercise="6" pages="4"}
+::extag{sheet="9" exercise="6"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).
@@ -163,7 +162,7 @@ This is a Cirq exercise; see [how the programming exercises work](/exercises/#pr
 
 ### Cirq: Grover's algorithm
 
-::source{sheet="9" exercise="7" pages="4"}
+::extag{sheet="9" exercise="7"}
 
 :::note[Programming exercise]
 This is a Cirq exercise; see [how the programming exercises work](/exercises/#programming-exercises).

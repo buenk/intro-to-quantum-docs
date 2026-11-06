@@ -3,11 +3,12 @@ title: Introduction to Quantum Computing
 description: Lecture notes and exercises of the Introduction to Quantum Computing course, organised by topic.
 template: splash
 hero:
+  layout: media-right
   image:
     light: ../../assets/hero-bloch-light.png
     dark: ../../assets/hero-bloch-dark.png
     alt: The Bloch sphere, as drawn in Lecture 1
-  tagline: The handwritten lecture notes and exercise sheets, transcribed and organised by topic. Every section links back to its original page.
+  tagline: The handwritten lecture notes and exercise sheets, transcribed and organised by topic. Every page links back to the original notes.
   actions:
     - text: Start reading
       link: notes/introduction/
@@ -22,24 +23,9 @@ hero:
       icon: document
 ---
 
-import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 export const withBase = (p) => import.meta.env.BASE_URL.replace(/\/$/, '') + p;
-
-<CardGrid stagger>
-	<Card title="35 topics" icon="open-book">
-		144 handwritten pages from 13 lectures, regrouped by subject into 9 parts.
-	</Card>
-	<Card title="85 exercises" icon="pencil">
-		All 13 exercise sheets, regrouped by topic and linked to the notes they practise.
-	</Card>
-	<Card title="Faithful to the originals" icon="document">
-		The wording and explanations are the lecturer's own. Every section names its lecture and page, and can show the original scan.
-	</Card>
-	<Card title="Math that reads well" icon="star">
-		All formulas are typeset with KaTeX; circuits and pictures are taken from the notes themselves.
-	</Card>
-</CardGrid>
 
 ## Lecture notes by topic
 
@@ -57,7 +43,7 @@ export const withBase = (p) => import.meta.env.BASE_URL.replace(/\/$/, '') + p;
 
 ## How to read this site
 
-- **By topic:** use the sidebar. Each page starts with the lectures it was compiled from, and every section names its source with a link to the original PDF.
+- **By topic:** use the sidebar. At the bottom of each page you find the lecture and pages it was transcribed from, with a link to the original PDF.
 - **By lecture:** the [sources page](sources/) lists each lecture section by section, with links to where it now lives.
-- **Originals:** under every section heading, *Show the original handwritten page* reveals the scanned page.
+- **Originals:** at the bottom of each page, *Show the original pages* reveals the scans of the handwritten notes.
 - **Exercises:** each topic links to its [exercises](exercises/), grouped the same way.

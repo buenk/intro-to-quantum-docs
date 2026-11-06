@@ -1,0 +1,11 @@
+---
+// Starlight <Footer> override: the page's sources block (from `sources` frontmatter), then
+// Starlight's default footer (pagination etc.).
+import Default from '@astrojs/starlight/components/Footer.astro';
+import PageSources from './PageSources.astro';
+
+const { data } = Astro.locals.starlightRoute.entry;
+---
+
+{data.sources?.length ? <PageSources sources={data.sources} exercisesLink={data.exercisesLink} polished={data.polished} /> : null}
+<Default />
