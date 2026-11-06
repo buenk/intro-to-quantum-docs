@@ -1,0 +1,63 @@
+---
+title: Introduction to Quantum Computing
+description: Lecture notes and exercises of the Introduction to Quantum Computing course, organised by topic.
+template: splash
+hero:
+  image:
+    light: ../../assets/hero-bloch-light.png
+    dark: ../../assets/hero-bloch-dark.png
+    alt: The Bloch sphere, as drawn in Lecture 1
+  tagline: The handwritten lecture notes and exercise sheets, transcribed and organised by topic. Every section links back to its original page.
+  actions:
+    - text: Start reading
+      link: notes/introduction/
+      icon: right-arrow
+    - text: Exercises
+      link: exercises/
+      variant: minimal
+      icon: pencil
+    - text: Original PDFs
+      link: sources/
+      variant: minimal
+      icon: document
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+export const withBase = (p) => import.meta.env.BASE_URL.replace(/\/$/, '') + p;
+
+<CardGrid stagger>
+	<Card title="35 topics" icon="open-book">
+		144 handwritten pages from 13 lectures, regrouped by subject into 9 parts.
+	</Card>
+	<Card title="85 exercises" icon="pencil">
+		All 13 exercise sheets, regrouped by topic and linked to the notes they practise.
+	</Card>
+	<Card title="Faithful to the originals" icon="document">
+		The wording and explanations are the lecturer's own. Every section names its lecture and page, and can show the original scan.
+	</Card>
+	<Card title="Math that reads well" icon="star">
+		All formulas are typeset with KaTeX; circuits and pictures are taken from the notes themselves.
+	</Card>
+</CardGrid>
+
+## Lecture notes by topic
+
+<CardGrid>
+	<LinkCard title="I · Foundations" description="About the course · Probabilistic bits · Complex numbers · Qubits and the Bloch sphere" href={withBase('/notes/introduction/')} />
+	<LinkCard title="II · Linear algebra" description="Matrices and vectors · Dirac notation, inner products and bases · Eigenvalues and special matrices · Tensor product" href={withBase('/notes/matrices-and-vectors/')} />
+	<LinkCard title="III · Quantum mechanics" description="The postulates of quantum mechanics · Change of basis and measurement · Composite systems and entanglement" href={withBase('/notes/postulates/')} />
+	<LinkCard title="IV · Quantum circuits" description="Quantum gates · Measurements, circuits and algorithms · Reversible computation and oracles · Quantum compiling" href={withBase('/notes/quantum-gates/')} />
+	<LinkCard title="V · Entanglement and communication" description="Bell states and superdense coding · Quantum teleportation · Non-locality: GHZ and CHSH games · Observables" href={withBase('/notes/superdense-coding/')} />
+	<LinkCard title="VI · Quantum algorithms" description="Deutsch's algorithm · Deutsch–Jozsa and Bernstein–Vazirani · Simon's algorithm · Grover's algorithm" href={withBase('/notes/deutsch/')} />
+	<LinkCard title="VII · Fourier transform and Shor's algorithm" description="Quantum phase estimation · Quantum Fourier transform · Number theory toolkit · Factoring via order finding · Period finding" href={withBase('/notes/phase-estimation/')} />
+	<LinkCard title="VIII · Error correction" description="Error correction for bits · Quantum error correction · The Steane code" href={withBase('/notes/classical-error-correction/')} />
+	<LinkCard title="IX · Mixed states and graphical notation" description="Density matrices and mixed states · Evolution, reduced states and quantum operations · Graphical notation · Simulating quantum circuits" href={withBase('/notes/density-matrices/')} />
+</CardGrid>
+
+## How to read this site
+
+- **By topic:** use the sidebar. Each page starts with the lectures it was compiled from, and every section names its source with a link to the original PDF.
+- **By lecture:** the [sources page](sources/) lists each lecture section by section, with links to where it now lives.
+- **Originals:** under every section heading, *Show the original handwritten page* reveals the scanned page.
+- **Exercises:** each topic links to its [exercises](exercises/), grouped the same way.
